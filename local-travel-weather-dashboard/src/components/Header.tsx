@@ -15,7 +15,8 @@ function Header() {
 
   const options = {
     componentRestrictions: { country: "se" },
-    types: [],
+    types: ["address"],
+    fields: ["geometry", "name", "address_components"],
   };
 
   useEffect(() => {
@@ -36,6 +37,7 @@ function Header() {
         if (!place.geometry || !place.geometry.location) return;
         const lat = place.geometry.location.lat();
         const lng = place.geometry.location.lng();
+        console.log(place);
         console.log(lat, lng);
       });
     }
