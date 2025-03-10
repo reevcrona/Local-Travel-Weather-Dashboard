@@ -6,6 +6,11 @@
 }
 .pac-container {
   background-color: #151515;
+  border-radius: 15px;
+}
+.pac-item {
+  display: flex;
+  flex-direction: column;
 }
 .pac-item,
 .pac-item-query {
@@ -14,6 +19,10 @@
 .pac-item:hover {
   background: #6666;
 }
+
 .pac-logo::after {
-  background-image: none;
+  display: none;
+}
+.pac-item-selected {
+  background-color: #6666;
 }

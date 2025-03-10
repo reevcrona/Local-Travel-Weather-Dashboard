@@ -47,12 +47,12 @@ function AutocompleteInput() {
       <label htmlFor="google-input"></label>
       <input
         id="google-input"
-        className="w-md bg-black pl-7 text-white placeholder:text-white"
+        className="min-h-10 w-md rounded-3xl bg-black pl-8 text-white placeholder:text-white"
         type="text"
         ref={inputRef}
         placeholder="Search"
       />
-      <div className="absolute top-1/2 left-1 -translate-y-1/2 transform">
+      <div className="absolute top-1/2 left-2 -translate-y-1/2 transform">
         <FaSearch color="white" />
       </div>
     </form>
