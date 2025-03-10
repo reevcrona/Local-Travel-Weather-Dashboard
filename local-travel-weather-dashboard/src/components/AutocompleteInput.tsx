@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Libraries, useLoadScript } from "@react-google-maps/api";
-
+import { FaSearch } from "react-icons/fa";
 const libraries: Libraries = ["places"];
 const googleApiKey: string = import.meta.env.VITE_GOOGLE_API_KEY;
 
@@ -43,12 +43,19 @@ function AutocompleteInput() {
     }
   }, [isLoaded]);
   return (
-    <input
-      style={{ width: "500px", backgroundColor: "black", color: "white" }}
-      type="text"
-      ref={inputRef}
-      placeholder="enter an address"
-    />
+    <form className="relative" onSubmit={(e) => e.preventDefault()}>
+      <label htmlFor="google-input"></label>
+      <input
+        id="google-input"
+        className="bg-black text-white placeholder:text-white w-md  pl-7"
+        type="text"
+        ref={inputRef}
+        placeholder="Search"
+      />
+      <div className="absolute left-1  top-1/2 transform -translate-y-1/2 ">
+        <FaSearch color="white" />
+      </div>
+    </form>
   );
 }
 
