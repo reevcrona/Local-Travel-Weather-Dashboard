@@ -25,7 +25,7 @@ function AutocompleteInput() {
     if (inputRef.current) {
       autocompleteRef.current = new window.google.maps.places.Autocomplete(
         inputRef.current,
-        options
+        options,
       );
     }
 
@@ -47,12 +47,12 @@ function AutocompleteInput() {
       <label htmlFor="google-input"></label>
       <input
         id="google-input"
-        className="bg-black text-white placeholder:text-white w-md  pl-7"
+        className="w-md bg-black pl-7 text-white placeholder:text-white"
         type="text"
         ref={inputRef}
         placeholder="Search"
       />
-      <div className="absolute left-1  top-1/2 transform -translate-y-1/2 ">
+      <div className="absolute top-1/2 left-1 -translate-y-1/2 transform">
         <FaSearch color="white" />
       </div>
     </form>
