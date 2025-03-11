@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Libraries, useLoadScript } from "@react-google-maps/api";
 import { FaSearch } from "react-icons/fa";
+import { handlePlaceSelect } from "../services/googlePlacesService";
 const libraries: Libraries = ["places"];
 const googleApiKey: string = import.meta.env.VITE_GOOGLE_API_KEY;
 const options = {
@@ -17,22 +18,6 @@ function AutocompleteInput() {
 
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<null | HTMLInputElement>(null);
-
-  const handlePlaceSelect = async (
-    autocomplete: google.maps.places.Autocomplete | null,
-  ) => {
-    if (!autocomplete) {
-      console.error("Autocomplete ref not available");
-      return;
-    }
-    const place = await autocomplete.getPlace();
-
-    if (!place.geometry || !place.geometry.location) return;
-    const lat = place.geometry.location.lat();
-    const lng = place.geometry.location.lng();
-    console.log(place);
-    console.log(lat, lng);
-  };
 
   useEffect(() => {
     if (!isLoaded) return;
