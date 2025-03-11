@@ -2,9 +2,11 @@ import { useEffect, useRef } from "react";
 import { Libraries, useLoadScript } from "@react-google-maps/api";
 import { FaSearch } from "react-icons/fa";
 import { handlePlaceSelect } from "../services/googlePlacesService";
+import { GoogleOptions } from "../types/autocompleteTypes";
 const libraries: Libraries = ["places"];
+
 const googleApiKey: string = import.meta.env.VITE_GOOGLE_API_KEY;
-const options = {
+const options: GoogleOptions = {
   componentRestrictions: { country: "se" },
   types: ["address"],
   fields: ["geometry", "name", "address_components"],
