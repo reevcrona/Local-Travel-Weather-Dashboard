@@ -3,6 +3,11 @@ import { Libraries, useLoadScript } from "@react-google-maps/api";
 import { FaSearch } from "react-icons/fa";
 const libraries: Libraries = ["places"];
 const googleApiKey: string = import.meta.env.VITE_GOOGLE_API_KEY;
+const options = {
+  componentRestrictions: { country: "se" },
+  types: ["address"],
+  fields: ["geometry", "name", "address_components"],
+};
 
 function AutocompleteInput() {
   const { isLoaded } = useLoadScript({
@@ -13,10 +18,20 @@ function AutocompleteInput() {
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<null | HTMLInputElement>(null);
 
-  const options = {
-    componentRestrictions: { country: "se" },
-    types: ["address"],
-    fields: ["geometry", "name", "address_components"],
+  const handlePlaceSelect = async (
+    autocomplete: google.maps.places.Autocomplete | null,
+  ) => {
+    if (!autocomplete) {
+      console.error("Autocomplete ref not available");
+      return;
+    }
+    const place = await autocomplete.getPlace();
+
+    if (!place.geometry || !place.geometry.location) return;
+    const lat = place.geometry.location.lat();
+    const lng = place.geometry.location.lng();
+    console.log(place);
+    console.log(lat, lng);
   };
 
   useEffect(() => {
@@ -32,13 +47,7 @@ function AutocompleteInput() {
     if (autocompleteRef.current) {
       const autocomplete = autocompleteRef.current;
       autocompleteRef.current.addListener("place_changed", async () => {
-        const place = await autocomplete.getPlace();
-
-        if (!place.geometry || !place.geometry.location) return;
-        const lat = place.geometry.location.lat();
-        const lng = place.geometry.location.lng();
-        console.log(place);
-        console.log(lat, lng);
+        handlePlaceSelect(autocomplete);
       });
     }
   }, [isLoaded]);
