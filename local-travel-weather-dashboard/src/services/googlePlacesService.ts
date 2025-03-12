@@ -5,11 +5,11 @@ export const handlePlaceSelect = async (
     console.error("Autocomplete not available");
     return;
   }
-  const place = await autocomplete.getPlace();
+  const place: google.maps.places.PlaceResult = await autocomplete.getPlace();
 
   if (!place.geometry || !place.geometry.location) return;
-  const lat = place.geometry.location.lat();
-  const lng = place.geometry.location.lng();
+  const lat: number = place.geometry.location.lat();
+  const lng: number = place.geometry.location.lng();
   console.log(place);
   console.log(lat, lng);
 };

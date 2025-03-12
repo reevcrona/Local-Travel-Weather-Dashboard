@@ -32,14 +32,18 @@ function AutocompleteInput() {
     }
 
     if (autocompleteRef.current) {
-      const autocomplete = autocompleteRef.current;
+      const autocomplete: google.maps.places.Autocomplete =
+        autocompleteRef.current;
       autocompleteRef.current.addListener("place_changed", async () => {
         handlePlaceSelect(autocomplete);
       });
     }
   }, [isLoaded]);
   return (
-    <form className="relative" onSubmit={(e) => e.preventDefault()}>
+    <form
+      className="relative"
+      onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}
+    >
       <label htmlFor="google-input"></label>
       <input
         id="google-input"
