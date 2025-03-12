@@ -1,9 +1,8 @@
 import Header from "./components/Header";
-
+import "./index.css";
 function App() {
   return (
     <>
-      <div className="bg-black text-white mb-4">Tailwind test</div>
       <Header />
     </>
   );
