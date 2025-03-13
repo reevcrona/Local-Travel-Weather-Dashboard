@@ -46,8 +46,7 @@ function AutocompleteInput() {
         });
       });
     }
-    console.log(coordinates);
-  }, [isLoaded, coordinates]);
+  }, [isLoaded]);
   return (
     <form
       className="relative"

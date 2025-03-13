@@ -8,20 +8,22 @@ const corsOptions = {
     origin: ["http://localhost:5173"],
 };
 app.use(cors(corsOptions));
+app.use(express.json());
 dotenv.config();
 const TRAFIKVERKET_API_KEY = process.env.TRAFIKVERKET_API_KEY;
 const API_URL = "https://api.trafikinfo.trafikverket.se/v2/data.json";
-const xmlData = `
+app.post("/situation", (req, res) => {
+    const { lat, lng } = req.body;
+    const xmlData = `
 <REQUEST>
     <LOGIN authenticationkey="${TRAFIKVERKET_API_KEY}"/>
     <QUERY objecttype="Situation" schemaversion="1.5" limit="10">
         <FILTER>
-            <NEAR name="Deviation.Geometry.Point.WGS84" value="56.2445598 12.8583161" maxdistance="10000"/>
+            <NEAR name="Deviation.Geometry.Point.WGS84" value="${lat} ${lng}" />
         </FILTER>
     </QUERY>
 </REQUEST>
 `;
-app.get("/", (req, res) => {
     axios
         .post(API_URL, xmlData, {
         headers: {
