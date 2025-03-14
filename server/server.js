@@ -14,12 +14,19 @@ const TRAFIKVERKET_API_KEY = process.env.TRAFIKVERKET_API_KEY;
 const API_URL = "https://api.trafikinfo.trafikverket.se/v2/data.json";
 app.post("/situation", (req, res) => {
     const { lat, lng } = req.body;
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+    const day = String(now.getDate()).padStart(2, "0");
+    const dynamicDate = `${year}-${month}-${day}T00:00:00`;
     const xmlData = `
 <REQUEST>
     <LOGIN authenticationkey="${TRAFIKVERKET_API_KEY}"/>
-    <QUERY objecttype="Situation" schemaversion="1.5" limit="10">
+    <QUERY objecttype="Situation" schemaversion="1.5" limit="20">
         <FILTER>
-            <NEAR name="Deviation.Geometry.Point.WGS84" value="${lat} ${lng}" />
+            <NEAR name="Deviation.Geometry.Point.WGS84" value="${lng} ${lat}" />
+            <GT name="Deviation.CreationTime" value="${dynamicDate}"/>
+            <NE name="Deviation.SeverityText" value="Ingen påverkan" />
         </FILTER>
     </QUERY>
 </REQUEST>

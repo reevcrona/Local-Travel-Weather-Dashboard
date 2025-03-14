@@ -3,7 +3,7 @@ import axios from "axios";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
 
 function Traffic() {
-  const [trafficD, setTrafficD] = useState("");
+  const [trafficD, setTrafficD] = useState<any>("");
   const [dataFetched, setDataFetched] = useState(false);
 
   const coordinates = useCoordinatesStore((state) => state.coordinates);
@@ -16,7 +16,7 @@ function Traffic() {
         lng: lng,
       });
 
-      setTrafficD(response.data);
+      setTrafficD(response.data.RESPONSE.RESULT[0].Situation);
       setDataFetched(true);
     } catch (error) {
       console.error("something failed in Traffic component", error);
@@ -28,10 +28,17 @@ function Traffic() {
 
     fetchTrafficData();
     if (dataFetched) {
-      console.log(trafficD.RESPONSE.RESULT[0]);
+      console.log(trafficD);
     }
     console.log(trafficD);
+    console.log(coordinates);
   }, [coordinates]);
+
+  const renderIds = () => {
+    return trafficD.map((item: any, key: any) => (
+      <p key={item.Id}>{item.Id}</p>
+    ));
+  };
 
   return <></>;
 }
