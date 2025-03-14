@@ -5,13 +5,14 @@ import { useCoordinatesStore } from "../stores/coordinatesStore";
 function Traffic() {
   const [trafficD, setTrafficD] = useState<any>("");
   const [dataFetched, setDataFetched] = useState(false);
+  const [trainsData, setTrainsData] = useState<any>("");
 
   const coordinates = useCoordinatesStore((state) => state.coordinates);
 
   const fetchTrafficData = async () => {
     const { lat, lng } = coordinates;
     try {
-      const response = await axios.post("http://localhost:3000/situation", {
+      const response = await axios.post("http://localhost:3000/traffic", {
         lat: lat,
         lng: lng,
       });
@@ -23,15 +24,24 @@ function Traffic() {
     }
   };
 
+  const fetchTrainsData = async () => {
+    const { lat, lng } = coordinates;
+
+    try {
+      const response = await axios.post("http://localhost:3000/trains", {
+        lat: lat,
+        lng: lng,
+      });
+      setTrainsData(response.data);
+    } catch (error) {
+      console.error("something failed in Traffic component", error);
+    }
+  };
+
   useEffect(() => {
     if (coordinates.lat === 0 && coordinates.lng === 0) return;
-
-    fetchTrafficData();
-    if (dataFetched) {
-      console.log(trafficD);
-    }
-    console.log(trafficD);
-    console.log(coordinates);
+    fetchTrainsData();
+    console.log(trainsData);
   }, [coordinates]);
 
   return <></>;

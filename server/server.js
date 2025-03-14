@@ -13,7 +13,7 @@ app.use(express.json());
 dotenv.config();
 const TRAFIKVERKET_API_KEY = process.env.TRAFIKVERKET_API_KEY;
 const API_URL = "https://api.trafikinfo.trafikverket.se/v2/data.json";
-app.post("/situation", (req, res) => {
+app.post("/traffic", (req, res) => {
     const { lat, lng } = req.body;
     const now = new Date();
     const year = now.getFullYear();
@@ -46,6 +46,31 @@ app.post("/situation", (req, res) => {
         .catch((error) => {
         console.error("Failed to retrive data", error);
         res.status(500).send("Failed to fetch data");
+    });
+});
+app.post("/trains", (req, res) => {
+    const { lat, lng } = req.body;
+    const xmlData = `
+  <REQUEST>
+    <LOGIN authenticationkey="${TRAFIKVERKET_API_KEY}"/>
+    <QUERY objecttype="TrainMessage" schemaversion="1" limit="10">
+      <FILTER>
+          <NEAR name="Geometry.WGS84" value="${lng} ${lat}" />
+      </FILTER>
+    </QUERY>
+  </REQUEST>
+  `;
+    axios
+        .post(API_URL, xmlData, {
+        headers: {
+            "Content-Type": "text/xml",
+        },
+    })
+        .then((response) => {
+        res.json(response.data);
+    })
+        .catch((error) => {
+        console.error(error);
     });
 });
 app.listen(port, () => {
