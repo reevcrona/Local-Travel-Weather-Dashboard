@@ -34,12 +34,6 @@ function Traffic() {
     console.log(coordinates);
   }, [coordinates]);
 
-  const renderIds = () => {
-    return trafficD.map((item: any, key: any) => (
-      <p key={item.Id}>{item.Id}</p>
-    ));
-  };
-
   return <></>;
 }
 
