@@ -16,7 +16,7 @@ function Traffic() {
         lng: lng,
       });
 
-      setTrafficD(response.data.RESPONSE.RESULT[0].Situation);
+      setTrafficD(response.data);
       setDataFetched(true);
     } catch (error) {
       console.error("something failed in Traffic component", error);

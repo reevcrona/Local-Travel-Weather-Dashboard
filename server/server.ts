@@ -46,7 +46,7 @@ app.post("/situation", (req, res) => {
     })
     .then((response) => {
       console.log(response.data);
-      res.json(response.data);
+      res.json(response.data.RESPONSE.RESULT[0].Situation);
     })
     .catch((error) => {
       console.error("Failed to retrive data", error);
