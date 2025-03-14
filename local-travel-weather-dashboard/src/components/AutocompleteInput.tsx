@@ -3,6 +3,7 @@ import { Libraries, useLoadScript } from "@react-google-maps/api";
 import { FaSearch } from "react-icons/fa";
 import { handlePlaceSelect } from "../services/googlePlacesService";
 import { GoogleOptions } from "../types/autocompleteTypes";
+import { useCoordinatesStore } from "../stores/coordinatesStore";
 const libraries: Libraries = ["places"];
 
 const googleApiKey: string = import.meta.env.VITE_GOOGLE_API_KEY;
@@ -21,6 +22,9 @@ function AutocompleteInput() {
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<null | HTMLInputElement>(null);
 
+  const coordinates = useCoordinatesStore((state) => state.coordinates);
+  const setCoordinates = useCoordinatesStore((state) => state.setCoordinates);
+
   useEffect(() => {
     if (!isLoaded) return;
 
@@ -35,7 +39,11 @@ function AutocompleteInput() {
       const autocomplete: google.maps.places.Autocomplete =
         autocompleteRef.current;
       autocompleteRef.current.addListener("place_changed", async () => {
-        handlePlaceSelect(autocomplete);
+        handlePlaceSelect(autocomplete).then((cords) => {
+          if (cords) {
+            setCoordinates(cords);
+          }
+        });
       });
     }
   }, [isLoaded]);
