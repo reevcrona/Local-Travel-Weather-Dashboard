@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import axios from "axios";
 import dotenv from "dotenv";
+import { filterAndFormatTrafficData } from "./utils/filterAndFormatTrafficData.js";
 const app = express();
 const port = 3000;
 const corsOptions = {
@@ -22,7 +23,7 @@ app.post("/situation", (req, res) => {
     const xmlData = `
 <REQUEST>
     <LOGIN authenticationkey="${TRAFIKVERKET_API_KEY}"/>
-    <QUERY objecttype="Situation" schemaversion="1.5" limit="20">
+    <QUERY objecttype="Situation" schemaversion="1.5" limit="50">
         <FILTER>
             <NEAR name="Deviation.Geometry.Point.WGS84" value="${lng} ${lat}" />
             <GT name="Deviation.CreationTime" value="${dynamicDate}"/>
@@ -38,8 +39,9 @@ app.post("/situation", (req, res) => {
         },
     })
         .then((response) => {
-        console.log(response.data);
-        res.json(response.data.RESPONSE.RESULT[0].Situation);
+        const situations = response.data.RESPONSE.RESULT[0].Situation;
+        const formattedData = filterAndFormatTrafficData(situations);
+        res.json(formattedData);
     })
         .catch((error) => {
         console.error("Failed to retrive data", error);
