@@ -1,19 +1,15 @@
 import { create } from "zustand";
 import { Deviation } from "../types/trafficTypes";
-import { useCoordinatesStore } from "./coordinatesStore";
 import axios from "axios";
-
-const coordinates = useCoordinatesStore((state) => state.coordinates);
-const { lat, lng } = coordinates;
 
 type TrafficStore = {
   trafficData: Deviation[];
-  fetchTrafficData: () => Promise<void>;
+  fetchTrafficData: (lat: number, lng: number) => Promise<void>;
 };
 
 export const useTrafficStore = create<TrafficStore>((set) => ({
   trafficData: [],
-  fetchTrafficData: async () => {
+  fetchTrafficData: async (lat: number, lng: number) => {
     try {
       const response = await axios.post<Deviation[]>(
         "http://localhost:3000/traffic",

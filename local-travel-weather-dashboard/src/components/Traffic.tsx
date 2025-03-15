@@ -1,30 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
-
+import { useTrafficStore } from "../stores/trafficStore";
 function Traffic() {
-  const [trafficD, setTrafficD] = useState<any>("");
-  const [dataFetched, setDataFetched] = useState(false);
-  const [trainsData, setTrainsData] = useState<any>("");
-
+  const fetchTrafficData = useTrafficStore((state) => state.fetchTrafficData);
+  const trafficData = useTrafficStore((state) => state.trafficData);
   const coordinates = useCoordinatesStore((state) => state.coordinates);
 
-  const fetchTrafficData = async () => {
-    const { lat, lng } = coordinates;
-    try {
-      const response = await axios.post("http://localhost:3000/traffic", {
-        lat: lat,
-        lng: lng,
-      });
-
-      setTrafficD(response.data);
-      setDataFetched(true);
-    } catch (error) {
-      console.error("something failed in Traffic component", error);
-    }
-  };
-
-  const fetchTrainsData = async () => {
+  /* const fetchTrainsData = async () => {
     const { lat, lng } = coordinates;
 
     try {
@@ -37,11 +20,11 @@ function Traffic() {
       console.error("something failed in Traffic component", error);
     }
   };
-
+*/
   useEffect(() => {
     if (coordinates.lat === 0 && coordinates.lng === 0) return;
-    fetchTrafficData();
-    console.log(trafficD);
+    fetchTrafficData(coordinates.lat, coordinates.lng);
+    console.log(trafficData);
   }, [coordinates]);
 
   return <></>;
