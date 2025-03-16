@@ -7,5 +7,6 @@ export type Deviation = {
   EndTime: string;
   Message: string;
   MessageType: string;
-  TemporaryLimit?: string;
+  TemporaryLimit?: string | string[];
+  SeverityCode: number;
 };
