@@ -17,7 +17,18 @@ export const filterAndFormatTrafficData = (situations) => {
             "VersionTime",
             "SeverityCode",
         ];
-        const formattedData = {};
+        const formattedData = {
+            LocationDescriptor: "",
+            MessageType: "",
+            Message: "",
+            RoadNumber: "",
+            SeverityText: "",
+            TemporaryLimit: [],
+            StartTime: "",
+            EndTime: "",
+            VersionTime: "",
+            SeverityCode: 0,
+        };
         const firstDeviation = situation.Deviation[0];
         propertyArray.forEach((property) => {
             const value = firstDeviation[property];
@@ -35,8 +46,14 @@ export const filterAndFormatTrafficData = (situations) => {
                     }
                 });
             }
+            if (extraDeviations.length === 1 && extraDeviations[0].TemporaryLimit) {
+                tempLimits.push(extraDeviations[0].TemporaryLimit);
+            }
             if (tempLimits.length > 0) {
                 formattedData.TemporaryLimit = tempLimits;
+            }
+            else {
+                delete formattedData.TemporaryLimit;
             }
         }
         return formattedData;

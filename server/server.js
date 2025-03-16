@@ -44,7 +44,6 @@ app.post("/traffic", (req, res) => {
     })
         .then((response) => {
         const situations = response.data.RESPONSE.RESULT[0].Situation;
-        const formattedData = filterAndFormatTrafficData(situations);
         const sortedData = sortFilterdDeviations(filterAndFormatTrafficData(situations));
         res.json(sortedData);
     })
