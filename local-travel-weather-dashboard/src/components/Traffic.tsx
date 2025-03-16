@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
 import { useTrafficStore } from "../stores/trafficStore";
+import { FaRoad } from "react-icons/fa";
 function Traffic() {
   const fetchTrafficData = useTrafficStore((state) => state.fetchTrafficData);
   const trafficData = useTrafficStore((state) => state.trafficData);
@@ -33,10 +34,14 @@ function Traffic() {
       return (
         <div key={index} className="mb-4">
           <div className="top-container flex justify-between bg-black text-white">
-            <h2>
-              {info.MessageType}
-              {info.RoadNumber !== "" ? `- ${info.RoadNumber}` : ""}
-            </h2>
+            <div className="flex items-center">
+              <FaRoad />
+              <h2>
+                {info.MessageType}
+                {info.RoadNumber !== "" ? `- ${info.RoadNumber}` : ""}
+              </h2>
+            </div>
+
             <div>
               <h4>{info.SeverityText}</h4>
               <h4>Uppdaterad {info.VersionTime}</h4>
