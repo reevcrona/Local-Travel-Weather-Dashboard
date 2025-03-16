@@ -3,7 +3,10 @@ import cors from "cors";
 import axios from "axios";
 import dotenv from "dotenv";
 import { TrafikverketResponse } from "./types/trafikVerketResponseType";
-import { filterAndFormatTrafficData } from "./utils/filterAndFormatTrafficData.js";
+import {
+  filterAndFormatTrafficData,
+  sortFilterdDeviations,
+} from "./utils/filterAndFormatTrafficData.js";
 
 const app = express();
 const port = 3000;
@@ -52,8 +55,11 @@ app.post("/traffic", (req, res) => {
     })
     .then((response) => {
       const situations = response.data.RESPONSE.RESULT[0].Situation;
-      const formattedData = filterAndFormatTrafficData(situations);
-      res.json(formattedData);
+      const sortedData = sortFilterdDeviations(
+        filterAndFormatTrafficData(situations)
+      );
+
+      res.json(sortedData);
     })
     .catch((error) => {
       console.error("Failed to retrive data", error);

@@ -4,11 +4,7 @@ import {
   Deviation,
 } from "../types/trafikVerketResponseType";
 
-const addIfExists = (
-  obj: Record<string, string | string[]>,
-  key: string,
-  value: string | string[]
-) => {
+const addIfExists = <T, K extends keyof T>(obj: T, key: K, value: T[K]) => {
   if (value !== undefined && value !== null && value !== "") {
     obj[key] = value;
   }
@@ -16,7 +12,7 @@ const addIfExists = (
 
 export const filterAndFormatTrafficData = (situations: Situation[]) => {
   return situations.map((situation) => {
-    const propertyArray: (keyof Deviation)[] = [
+    const propertyArray: (keyof FilterdDeviation)[] = [
       "LocationDescriptor",
       "MessageType",
       "Message",
@@ -26,15 +22,16 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
       "StartTime",
       "EndTime",
       "VersionTime",
+      "SeverityCode",
     ];
 
-    const formattedData: Record<string, string | string[]> = {};
+    const formattedData: Partial<FilterdDeviation> = {};
     const firstDeviation = situation.Deviation[0];
 
     propertyArray.forEach((property) => {
       const value = firstDeviation[property];
 
-      if (typeof value === "string") {
+      if (typeof value === "string" || typeof value === "number") {
         addIfExists(formattedData, property, value);
       }
     });
@@ -50,10 +47,13 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
         });
       }
       if (tempLimits.length > 0) {
-        formattedData.TemporaryLimits = tempLimits;
+        formattedData.TemporaryLimit = tempLimits;
       }
     }
-
-    return formattedData;
+    return formattedData as FilterdDeviation;
   });
+};
+
+export const sortFilterdDeviations = (situations: FilterdDeviation[]) => {
+  return situations.sort((a, b) => b.SeverityCode - a.SeverityCode);
 };

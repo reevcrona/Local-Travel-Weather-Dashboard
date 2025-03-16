@@ -15,12 +15,13 @@ export const filterAndFormatTrafficData = (situations) => {
             "StartTime",
             "EndTime",
             "VersionTime",
+            "SeverityCode",
         ];
         const formattedData = {};
         const firstDeviation = situation.Deviation[0];
         propertyArray.forEach((property) => {
             const value = firstDeviation[property];
-            if (typeof value === "string") {
+            if (typeof value === "string" || typeof value === "number") {
                 addIfExists(formattedData, property, value);
             }
         });
@@ -35,9 +36,12 @@ export const filterAndFormatTrafficData = (situations) => {
                 });
             }
             if (tempLimits.length > 0) {
-                formattedData.TemporaryLimits = tempLimits;
+                formattedData.TemporaryLimit = tempLimits;
             }
         }
         return formattedData;
     });
+};
+export const sortFilterdDeviations = (situations) => {
+    return situations.sort((a, b) => b.SeverityCode - a.SeverityCode);
 };
