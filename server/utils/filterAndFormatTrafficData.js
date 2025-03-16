@@ -31,7 +31,13 @@ export const filterAndFormatTrafficData = (situations) => {
         };
         const firstDeviation = situation.Deviation[0];
         propertyArray.forEach((property) => {
-            const value = firstDeviation[property];
+            let value = firstDeviation[property];
+            if ((property === "StartTime" ||
+                property === "EndTime" ||
+                property === "VersionTime") &&
+                typeof value === "string") {
+                value = formatTimeProperty(value);
+            }
             if (typeof value === "string" || typeof value === "number") {
                 addIfExists(formattedData, property, value);
             }
@@ -65,4 +71,13 @@ export const filterAndFormatTrafficData = (situations) => {
 };
 export const sortFilterdDeviations = (situations) => {
     return situations.sort((a, b) => b.SeverityCode - a.SeverityCode);
+};
+export const formatTimeProperty = (timeProp) => {
+    const date = new Date(timeProp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
