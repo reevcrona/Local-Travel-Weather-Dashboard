@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
 import { useTrafficStore } from "../stores/trafficStore";
-import { FaRoad } from "react-icons/fa";
+import { FaRoad, FaRegCalendarAlt } from "react-icons/fa";
 function Traffic() {
   const fetchTrafficData = useTrafficStore((state) => state.fetchTrafficData);
   const trafficData = useTrafficStore((state) => state.trafficData);
@@ -51,17 +51,30 @@ function Traffic() {
             <h2>{info.LocationDescriptor}</h2>
           </div>
           <div className="bottom-container">
-            <p>{info.Message}</p>
-            {info.TemporaryLimit && info.TemporaryLimit.length > 0 ? (
-              <>
-                <h4>Tillfälliga begränsningar</h4>
-                <ul>
-                  {info.TemporaryLimit.map((tempLimit, index) => (
-                    <li key={index}>{tempLimit}</li>
-                  ))}
-                </ul>
-              </>
-            ) : null}
+            <div>
+              <p>{info.Message}</p>
+              {info.TemporaryLimit && info.TemporaryLimit.length > 0 ? (
+                <>
+                  <h4>Tillfälliga begränsningar</h4>
+                  <ul>
+                    {info.TemporaryLimit.map((tempLimit, index) => (
+                      <li key={index}>{tempLimit}</li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
+            </div>
+            <div>
+              <div>
+                <FaRegCalendarAlt />
+                <span>Starttid</span>
+                <p>{info.StartTime}</p>
+              </div>
+              <div>
+                <span>Sluttid</span>
+                <p>{info.EndTime}</p>
+              </div>
+            </div>
           </div>
         </div>
       );
