@@ -68,6 +68,11 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
       } else {
         delete formattedData.TemporaryLimit;
       }
+    } else if (
+      formattedData.TemporaryLimit &&
+      formattedData.TemporaryLimit.length < 1
+    ) {
+      delete formattedData.TemporaryLimit;
     }
     return formattedData;
   });
