@@ -1,4 +1,11 @@
 @import "tailwindcss";
+
+@theme {
+  --color-trafficGrayHeader: #4d5061;
+  --color-trafficDarkOliveHeader: #866e00;
+  --color-trafficRedHeader: #a31621;
+}
+
 #root {
   min-height: 100vh;
   display: flex;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
 import { useTrafficStore } from "../stores/trafficStore";
 import { FaRoad, FaRegCalendarAlt } from "react-icons/fa";
@@ -7,6 +7,12 @@ function Traffic() {
   const trafficData = useTrafficStore((state) => state.trafficData);
   const coordinates = useCoordinatesStore((state) => state.coordinates);
   const { lat, lng } = coordinates;
+
+  const colorTable: { [key: number]: string } = {
+    2: "trafficGrayHeader",
+    4: "trafficSageHeader",
+    5: "trafficRedHeader",
+  };
 
   /* const fetchTrainsData = async () => {
     const { lat, lng } = coordinates;
@@ -33,7 +39,9 @@ function Traffic() {
     return trafficData.map((info, index) => {
       return (
         <div key={index} className="mb-4">
-          <div className="top-container flex justify-between bg-black text-white">
+          <div
+            className={`top-container ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} flex justify-between text-white`}
+          >
             <div className="flex items-center">
               <FaRoad />
               <h2>
@@ -83,7 +91,11 @@ function Traffic() {
 
   return (
     <>
-      <div className="flex flex-col">{trafficData && renderTrafficData()}</div>
+      <div className="flex w-full justify-center">
+        <div className="flex max-h-[600px] w-full max-w-4xl flex-col overflow-y-auto">
+          {trafficData && renderTrafficData()}
+        </div>
+      </div>
     </>
   );
 }
