@@ -24,16 +24,20 @@ app.post("/traffic", (req, res) => {
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
+  const day = String(now.getDate() - 1).padStart(2, "0");
 
   const dynamicDate = `${year}-${month}-${day}T00:00:00`;
+  const firstMonth = `${year}-${month}-1T00:00:00`;
   const xmlData = `
 <REQUEST>
     <LOGIN authenticationkey="${TRAFIKVERKET_API_KEY}"/>
-    <QUERY objecttype="Situation" schemaversion="1.5" limit="50">
+    <QUERY objecttype="Situation" schemaversion="1.5" limit="20">
         <FILTER>
-            <NEAR name="Deviation.Geometry.Point.WGS84" value="${lng} ${lat}" />
-            <GT name="Deviation.CreationTime" value="${dynamicDate}"/>
+            <NEAR name="Deviation.Geometry.Point.WGS84" value="${lng} ${lat}"/>
+            
+            <GT name="Deviation.CreationTime" value="${firstMonth}"/>
+            
+            
             <NE name="Deviation.SeverityText" value="Ingen påverkan" />
         </FILTER>
     </QUERY>

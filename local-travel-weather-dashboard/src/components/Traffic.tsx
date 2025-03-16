@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
 import { useTrafficStore } from "../stores/trafficStore";
 function Traffic() {
   const fetchTrafficData = useTrafficStore((state) => state.fetchTrafficData);
   const trafficData = useTrafficStore((state) => state.trafficData);
   const coordinates = useCoordinatesStore((state) => state.coordinates);
+  const { lat, lng } = coordinates;
 
   /* const fetchTrainsData = async () => {
     const { lat, lng } = coordinates;
@@ -22,10 +22,21 @@ function Traffic() {
   };
 */
   useEffect(() => {
-    if (coordinates.lat === 0 && coordinates.lng === 0) return;
+    if (lat === 0 && lng === 0) return;
     fetchTrafficData(coordinates.lat, coordinates.lng);
     console.log(trafficData);
+    console.log(coordinates);
   }, [coordinates]);
+
+  const renderTrafficData = () => {
+    return trafficData.map((info, index) => {
+      return (
+        <div key={index}>
+          <h2>{info.LocationDescriptor}</h2>
+        </div>
+      );
+    });
+  };
 
   return <></>;
 }
