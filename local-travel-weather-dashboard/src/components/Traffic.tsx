@@ -37,8 +37,11 @@ function Traffic() {
             className={`top-container px-5 py-3 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} flex justify-between text-white`}
           >
             <div className="flex items-center">
-              <FaRoad className="text-3xl" />
-              <h2 className="ml-4 text-2xl">
+              <div className="pt-1">
+                <FaRoad className="text-3xl" />
+              </div>
+
+              <h2 className="ml-3 text-2xl">
                 {info.MessageType}
                 {info.RoadNumber !== "" ? ` - ${info.RoadNumber}` : ""}
               </h2>
@@ -55,7 +58,10 @@ function Traffic() {
           <div className="header-text flex pt-3 pl-3">
             <h2 className="text-xl">{info.LocationDescriptor}</h2>
           </div>
-          <hr className="mt-4 mb-4" />
+          <div className="px-3">
+            <hr className="mt-4 mb-4 border-t-2 border-hrColor opacity-70" />
+          </div>
+
           <div className="bottom-container flex px-3">
             <div className="flex flex-1 flex-col">
               <p className="mb-2 pr-3">{info.Message}</p>
@@ -70,7 +76,7 @@ function Traffic() {
                 </>
               ) : null}
             </div>
-            <div className="flex flex-1 justify-between">
+            <div className="flex flex-1 justify-between px-1">
               <div className="flex gap-2">
                 <span className="pt-1">
                   <FaRegCalendarAlt className="flex items-center" />
