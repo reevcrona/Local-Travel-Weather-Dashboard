@@ -1,10 +1,16 @@
 @import "tailwindcss";
 
 @theme {
+  /* Custom colors */
   --color-trafficGrayHeader: #4d5061;
   --color-trafficDarkOliveHeader: #866e00;
   --color-trafficRedHeader: #a31621;
   --color-hrColor: #9fa2b2;
+  /* Custom colors */
+
+  /* Custom container query ranges */
+  --container-trafficSmall: 605px;
+  /* Custom container query ranges */
 }
 
 #root {

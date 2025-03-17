@@ -34,7 +34,7 @@ function Traffic() {
       return (
         <div key={index} className="mb-4">
           <div
-            className={`top-container px-5 py-3 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} flex justify-between text-white`}
+            className={`top-container px-5 py-3 @max-trafficSmall/main:flex-col ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} flex justify-between text-white`}
           >
             <div className="flex items-center">
               <div className="pt-1">
@@ -46,9 +46,13 @@ function Traffic() {
                 {info.RoadNumber !== "" ? ` - ${info.RoadNumber}` : ""}
               </h2>
             </div>
-
+            <div>
+              <hr className="mt-3 mb-2 hidden border-t-2 border-hrColor opacity-70 @max-trafficSmall/main:block" />
+            </div>
             <div className="flex flex-col">
-              <h4 className="text-end font-bold">{info.SeverityText}</h4>
+              <h4 className="text-end font-bold @max-trafficSmall/main:mb-[2px] @max-trafficSmall/main:text-start">
+                {info.SeverityText}
+              </h4>
               <h4 className="font-bold">
                 Uppdaterad{" "}
                 <span className="font-normal">{info.VersionTime}</span>
@@ -99,7 +103,7 @@ function Traffic() {
   return (
     <>
       <div className="flex w-full justify-center">
-        <div className="flex max-h-[600px] w-full max-w-4xl flex-col overflow-y-auto">
+        <div className="@container/main flex max-h-[600px] w-full max-w-4xl flex-col overflow-y-auto px-3">
           {trafficData && renderTrafficData()}
         </div>
       </div>
