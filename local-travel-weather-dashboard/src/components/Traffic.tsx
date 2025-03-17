@@ -34,7 +34,7 @@ function Traffic() {
       return (
         <div key={index} className="mb-4">
           <div
-            className={`top-container px-5 py-3 @max-trafficSmall/main:flex-col ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} flex justify-between text-white`}
+            className={`top-container px-5 py-3 @max-trafficHeaderSmall/main:flex-col ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} flex justify-between text-white`}
           >
             <div className="flex items-center">
               <div className="pt-1">
@@ -47,10 +47,10 @@ function Traffic() {
               </h2>
             </div>
             <div>
-              <hr className="mt-3 mb-2 hidden border-t-2 border-hrColor opacity-70 @max-trafficSmall/main:block" />
+              <hr className="mt-3 mb-2 hidden border-t-2 border-hrColor opacity-70 @max-trafficHeaderSmall/main:block" />
             </div>
             <div className="flex flex-col">
-              <h4 className="text-end font-bold @max-trafficSmall/main:mb-[2px] @max-trafficSmall/main:text-start">
+              <h4 className="text-end font-bold @max-trafficHeaderSmall/main:mb-[2px] @max-trafficHeaderSmall/main:text-start">
                 {info.SeverityText}
               </h4>
               <h4 className="font-bold">
@@ -66,7 +66,7 @@ function Traffic() {
             <hr className="mt-4 mb-4 border-t-2 border-hrColor opacity-70" />
           </div>
 
-          <div className="bottom-container flex px-3">
+          <div className="bottom-container flex px-3 @max-bottomContainerCol/main:flex-col">
             <div className="flex flex-1 flex-col">
               <p className="mb-2 pr-3">{info.Message}</p>
               {info.TemporaryLimit && info.TemporaryLimit.length > 0 ? (
@@ -80,7 +80,7 @@ function Traffic() {
                 </>
               ) : null}
             </div>
-            <div className="flex flex-1 justify-between px-1">
+            <div className="flex flex-1 justify-between px-1 @max-bottomContainerCol/main:flex-col">
               <div className="flex gap-2">
                 <span className="pt-1">
                   <FaRegCalendarAlt className="flex items-center" />
@@ -89,8 +89,10 @@ function Traffic() {
                 <span className="font-bold">Starttid</span>
                 <p>{info.StartTime}</p>
               </div>
-              <div className="flex gap-2">
-                <span className="font-bold">Sluttid</span>
+              <div className="flex gap-2 @max-bottomContainerCol/main:ml-6">
+                <span className="font-bold @max-bottomContainerCol/main:mr-1.5">
+                  Sluttid
+                </span>
                 <p>{info.EndTime}</p>
               </div>
             </div>

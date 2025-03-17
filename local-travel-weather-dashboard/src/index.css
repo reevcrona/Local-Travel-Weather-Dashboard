@@ -9,7 +9,8 @@
   /* Custom colors */
 
   /* Custom container query ranges */
-  --container-trafficSmall: 605px;
+  --container-trafficHeaderSmall: 605px;
+  --container-bottomContainerCol: 851px;
   /* Custom container query ranges */
 }
 
