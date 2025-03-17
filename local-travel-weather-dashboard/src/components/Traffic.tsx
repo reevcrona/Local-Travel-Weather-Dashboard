@@ -8,12 +8,6 @@ function Traffic() {
   const coordinates = useCoordinatesStore((state) => state.coordinates);
   const { lat, lng } = coordinates;
 
-  const colorTable: { [key: number]: string } = {
-    2: "trafficGrayHeader",
-    4: "trafficSageHeader",
-    5: "trafficRedHeader",
-  };
-
   /* const fetchTrainsData = async () => {
     const { lat, lng } = coordinates;
 
@@ -40,19 +34,22 @@ function Traffic() {
       return (
         <div key={index} className="mb-4">
           <div
-            className={`top-container ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} flex justify-between text-white`}
+            className={`top-container px-7 py-3 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} flex justify-between text-white`}
           >
             <div className="flex items-center">
-              <FaRoad />
-              <h2>
+              <FaRoad className="text-3xl" />
+              <h2 className="ml-4 text-2xl">
                 {info.MessageType}
-                {info.RoadNumber !== "" ? `- ${info.RoadNumber}` : ""}
+                {info.RoadNumber !== "" ? ` - ${info.RoadNumber}` : ""}
               </h2>
             </div>
 
-            <div>
-              <h4>{info.SeverityText}</h4>
-              <h4>Uppdaterad {info.VersionTime}</h4>
+            <div className="flex flex-col">
+              <h4 className="text-end font-bold">{info.SeverityText}</h4>
+              <h4 className="font-bold">
+                Uppdaterad{" "}
+                <span className="font-normal">{info.VersionTime}</span>
+              </h4>
             </div>
           </div>
           <div className="header-text">
