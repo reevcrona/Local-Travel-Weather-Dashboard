@@ -34,7 +34,7 @@ function Traffic() {
       return (
         <div key={index} className="mb-4">
           <div
-            className={`top-container px-7 py-3 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} flex justify-between text-white`}
+            className={`top-container px-5 py-3 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} flex justify-between text-white`}
           >
             <div className="flex items-center">
               <FaRoad className="text-3xl" />
@@ -52,16 +52,17 @@ function Traffic() {
               </h4>
             </div>
           </div>
-          <div className="header-text">
-            <h2>{info.LocationDescriptor}</h2>
+          <div className="header-text flex pt-3 pl-3">
+            <h2 className="text-xl">{info.LocationDescriptor}</h2>
           </div>
-          <div className="bottom-container">
-            <div>
-              <p>{info.Message}</p>
+          <hr className="mt-4 mb-4" />
+          <div className="bottom-container flex px-3">
+            <div className="flex flex-1 flex-col">
+              <p className="mb-2 pr-3">{info.Message}</p>
               {info.TemporaryLimit && info.TemporaryLimit.length > 0 ? (
                 <>
-                  <h4>Tillfälliga begränsningar</h4>
-                  <ul>
+                  <h4 className="font-bold">Tillfälliga begränsningar</h4>
+                  <ul className="list-disc pl-9">
                     {info.TemporaryLimit.map((tempLimit, index) => (
                       <li key={index}>{tempLimit}</li>
                     ))}
@@ -69,14 +70,17 @@ function Traffic() {
                 </>
               ) : null}
             </div>
-            <div>
-              <div>
-                <FaRegCalendarAlt />
-                <span>Starttid</span>
+            <div className="flex flex-1 justify-between">
+              <div className="flex gap-2">
+                <span className="pt-1">
+                  <FaRegCalendarAlt className="flex items-center" />
+                </span>
+
+                <span className="font-bold">Starttid</span>
                 <p>{info.StartTime}</p>
               </div>
-              <div>
-                <span>Sluttid</span>
+              <div className="flex gap-2">
+                <span className="font-bold">Sluttid</span>
                 <p>{info.EndTime}</p>
               </div>
             </div>
