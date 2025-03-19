@@ -50,7 +50,7 @@ function Traffic() {
   return (
     <>
       <div className="] flex w-full justify-center">
-        <div className="@container/main flex max-h-[700px] min-h-[500px] w-full max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4">
+        <div className="@container/main flex max-h-[600px] min-h-[500px] w-full max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4">
           {trafficData && renderTrafficData()}
         </div>
       </div>

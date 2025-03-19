@@ -5,7 +5,7 @@ function TrafficTextHeader({ index }: { index: number }) {
   const info = trafficData[index];
   return (
     <div className="px-5">
-      <div className="header-text flex w-[max-content] items-center rounded-lg bg-headerBg p-3">
+      <div className="header-text flex w-full max-w-[max-content] items-center rounded-lg bg-headerBg p-3">
         <FaMapMarkerAlt
           className={`mr-1 text-lg ${info.SeverityCode === 2 ? "text-trafficGrayHeader" : info.SeverityCode === 4 ? "text-trafficDarkOliveHeader" : "text-trafficRedHeader"}`}
         />
