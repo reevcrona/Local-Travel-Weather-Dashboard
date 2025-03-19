@@ -11,8 +11,8 @@ function TrafficTextHeader({ index }: { index: number }) {
         />
         <h2 className="text-base text-white">{info.LocationDescriptor}</h2>
       </div>
-      <div className="px-3">
-        <hr className="mt-5 border-t-2 border-hrColor opacity-70 @min-bottomContainerCol/main:mb-4" />
+      <div className="px-1">
+        <hr className="mt-5 border-t-2 border-hrColor opacity-70" />
       </div>
     </div>
   );

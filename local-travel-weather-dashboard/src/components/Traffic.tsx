@@ -35,10 +35,7 @@ function Traffic() {
   const renderTrafficData = () => {
     return trafficData.map((info, index) => {
       return (
-        <div
-          key={index}
-          className="relative mb-4 min-h-[400px] rounded-xl bg-cardcColor"
-        >
+        <div key={index} className="relative mb-4 rounded-xl bg-cardcColor">
           <div
             className={`absolute top-0 bottom-0 left-0 w-2 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
           ></div>
@@ -52,8 +49,8 @@ function Traffic() {
 
   return (
     <>
-      <div className="flex w-full justify-center">
-        <div className="@container/main flex max-h-[500px] min-h-[500px] w-full max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4">
+      <div className="] flex w-full justify-center">
+        <div className="@container/main flex max-h-[700px] min-h-[500px] w-full max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4">
           {trafficData && renderTrafficData()}
         </div>
       </div>
