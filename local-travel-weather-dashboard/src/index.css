@@ -9,6 +9,8 @@
   --color-cardcColor: rgb(30 41 59);
   --color-headerBg: rgb(41 53 72);
   --color-mainContainerBg: rgb(18 24 38);
+  --color-text-dark-400: rgb(100 116 139);
+  --color-text-dark-300: rgb(148 163 184);
   /* Custom colors */
 
   /* Custom container query ranges */

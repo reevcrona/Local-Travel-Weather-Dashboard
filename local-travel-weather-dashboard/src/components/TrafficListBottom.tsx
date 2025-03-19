@@ -1,39 +1,62 @@
 import { useTrafficStore } from "../stores/trafficStore";
-import { FaRegCalendarAlt } from "react-icons/fa";
+import { FaRegCalendarAlt, FaFlagCheckered } from "react-icons/fa";
+import { FaTriangleExclamation } from "react-icons/fa6";
 
 function TrafficListBottom({ index }: { index: number }) {
   const trafficData = useTrafficStore((state) => state.trafficData);
   const info = trafficData[index];
 
   return (
-    <div className="bottom-container flex flex-col px-3 @min-bottomContainerCol/main:flex-row">
-      <div className="flex flex-1 flex-col">
-        <p className="mb-2 pr-3">{info.Message}</p>
+    <div className="bottom-container flex flex-col gap-4 px-5 py-4 @min-bottomContainerCol/main:flex-row">
+      <div className="flex flex-1/5 flex-col">
+        <p className="mb-2 pr-3 text-white">{info.Message}</p>
         {info.TemporaryLimit && info.TemporaryLimit.length > 0 ? (
-          <>
-            <h4 className="font-bold">Tillfälliga begränsningar</h4>
+          <div className="rounded-lg border-l-4 border-trafficRedHeader bg-headerBg p-4">
+            <div className="flex items-center">
+              <FaTriangleExclamation className="mr-2 text-trafficRedHeader" />
+              <h4 className="font-bold text-white">
+                Tillfälliga begränsningar
+              </h4>
+            </div>
+
             <ul className="list-disc pl-9">
               {info.TemporaryLimit.map((tempLimit, index) => (
-                <li key={index}>{tempLimit}</li>
+                <li
+                  className="text-white marker:text-2xl marker:text-trafficRedHeader"
+                  key={index}
+                >
+                  {tempLimit}
+                </li>
               ))}
             </ul>
-          </>
+          </div>
         ) : null}
       </div>
-      <div className="mt-2 flex flex-1 flex-col justify-between px-1 @min-bottomContainerCol/main:mt-0 @min-bottomContainerCol/main:flex-row">
-        <div className="flex gap-2">
-          <span className="pt-1">
-            <FaRegCalendarAlt className="flex items-center" />
-          </span>
-
-          <span className="font-bold">Starttid</span>
-          <p>{info.StartTime}</p>
-        </div>
-        <div className="ml-6 flex gap-2 @min-bottomContainerCol/main:ml-0">
-          <span className="mr-1.5 font-bold @min-bottomContainerCol/main:mr-0">
-            Sluttid
-          </span>
-          <p>{info.EndTime}</p>
+      <div className="flex flex-1 flex-col items-center justify-center rounded-lg bg-headerBg px-2 py-8 @min-bottomContainerCol/main:mt-0 @min-bottomContainerCol/main:flex-col">
+        <h4 className="text-xl text-white">Tidsplan</h4>
+        <div className="just flex gap-6 p-4">
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-trafficRedHeader">
+              <FaRegCalendarAlt className="text-white" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold tracking-tight text-text-dark-400">
+                STARTTID
+              </span>
+              <p className="font-medium text-white">{info.StartTime}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-mainContainerBg">
+              <FaFlagCheckered className="text-white" />
+            </div>
+            <div className="flex flex-col">
+              <span className="mr-1.5 font-bold tracking-tight text-text-dark-400 @min-bottomContainerCol/main:mr-0">
+                SLUTTID
+              </span>
+              <p className="font-medium text-white">{info.EndTime}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

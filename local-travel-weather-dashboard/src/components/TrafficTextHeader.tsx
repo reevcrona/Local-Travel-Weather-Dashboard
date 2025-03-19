@@ -10,7 +10,7 @@ function TrafficTextHeader({ index }: { index: number }) {
         <h2 className="text-base text-white">{info.LocationDescriptor}</h2>
       </div>
       <div className="px-3">
-        <hr className="mt-4 mb-2 border-t-2 border-hrColor opacity-70 @min-bottomContainerCol/main:mb-4" />
+        <hr className="mt-5 border-t-2 border-hrColor opacity-70 @min-bottomContainerCol/main:mb-4" />
       </div>
     </div>
   );
