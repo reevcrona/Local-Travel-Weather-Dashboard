@@ -11,9 +11,13 @@ function TrafficListBottom({ index }: { index: number }) {
       <div className="flex flex-1/5 flex-col">
         <p className="mb-2 pr-3 text-white">{info.Message}</p>
         {info.TemporaryLimit && info.TemporaryLimit.length > 0 ? (
-          <div className="rounded-lg border-l-4 border-trafficRedHeader bg-headerBg p-4">
+          <div
+            className={`rounded-lg border-l-4 ${info.SeverityCode === 2 ? "border-trafficGrayHeader" : info.SeverityCode === 4 ? "border-trafficDarkOliveHeader" : "border-trafficRedHeader"} bg-headerBg p-4`}
+          >
             <div className="flex items-center">
-              <FaTriangleExclamation className="mr-2 text-trafficRedHeader" />
+              <FaTriangleExclamation
+                className={`mr-2 ${info.SeverityCode === 2 ? "text-trafficGrayHeader" : info.SeverityCode === 4 ? "text-trafficDarkOliveHeader" : "text-trafficRedHeader"}`}
+              />
               <h4 className="font-bold text-white">
                 Tillfälliga begränsningar
               </h4>
@@ -22,7 +26,7 @@ function TrafficListBottom({ index }: { index: number }) {
             <ul className="list-disc pl-9">
               {info.TemporaryLimit.map((tempLimit, index) => (
                 <li
-                  className="text-white marker:text-2xl marker:text-trafficRedHeader"
+                  className={`text-white marker:text-2xl ${info.SeverityCode === 2 ? "marker:text-trafficGrayHeader" : info.SeverityCode === 4 ? "marker:text-trafficDarkOliveHeader" : "marker:text-trafficRedHeader"}`}
                   key={index}
                 >
                   {tempLimit}
@@ -36,7 +40,9 @@ function TrafficListBottom({ index }: { index: number }) {
         <h4 className="text-xl text-white">Tidsplan</h4>
         <div className="just flex gap-6 p-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-trafficRedHeader">
+            <div
+              className={`flex h-8 w-8 items-center justify-center rounded-full ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
+            >
               <FaRegCalendarAlt className="text-white" />
             </div>
             <div className="flex flex-col">
