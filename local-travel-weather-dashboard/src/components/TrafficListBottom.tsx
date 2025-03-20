@@ -37,7 +37,7 @@ function TrafficListBottom({ index }: { index: number }) {
         ) : null}
       </div>
       <div className="flex flex-1 items-center justify-start @min-bottomContainerCol/main:justify-end">
-        <div className="flex w-[400px] max-w-[400px] flex-col items-center justify-center rounded-lg bg-headerBg px-2 @min-bottomContainerCol/main:mt-0 @min-bottomContainerCol/main:flex-col">
+        <div className="flex w-full max-w-[400px] flex-col items-center justify-center rounded-lg bg-headerBg px-2 @min-bottomContainerCol/main:mt-0 @min-bottomContainerCol/main:flex-col">
           <h4 className="py-4 text-xl text-white">Tidsplan</h4>
           <div className="flex gap-6 pb-5">
             <div className="flex items-center gap-2">

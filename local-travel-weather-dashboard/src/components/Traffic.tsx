@@ -35,7 +35,10 @@ function Traffic() {
   const renderTrafficData = () => {
     return trafficData.map((info, index) => {
       return (
-        <div key={index} className="relative mb-4 rounded-xl bg-cardcColor">
+        <div
+          key={index}
+          className="relative mb-4 rounded-xl border border-cardBorderColor bg-cardcColor"
+        >
           <div
             className={`absolute top-0 bottom-0 left-0 w-2 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
           ></div>
