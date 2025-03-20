@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
 import { useTrafficStore } from "../stores/trafficStore";
-
+import axios from "axios";
 import TrafficListTop from "./TrafficListTop";
 import TrafficTextHeader from "./TrafficTextHeader";
 import TrafficListBottom from "./TrafficListBottom";
@@ -9,9 +9,10 @@ function Traffic() {
   const fetchTrafficData = useTrafficStore((state) => state.fetchTrafficData);
   const trafficData = useTrafficStore((state) => state.trafficData);
   const coordinates = useCoordinatesStore((state) => state.coordinates);
+  const [trainsData, setTrainsData] = useState<any>([]);
   const { lat, lng } = coordinates;
 
-  /* const fetchTrainsData = async () => {
+  const fetchTrainsData = async () => {
     const { lat, lng } = coordinates;
 
     try {
@@ -24,11 +25,11 @@ function Traffic() {
       console.error("something failed in Traffic component", error);
     }
   };
-*/
+
   useEffect(() => {
     if (lat === 0 && lng === 0) return;
-    fetchTrafficData(coordinates.lat, coordinates.lng);
-    console.log(trafficData);
+    fetchTrainsData();
+    console.log(trainsData);
     console.log(coordinates);
   }, [coordinates]);
 

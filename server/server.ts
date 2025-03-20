@@ -7,7 +7,7 @@ import {
   filterAndFormatTrafficData,
   sortFilterdDeviations,
 } from "./utils/filterAndFormatTrafficData.js";
-
+import { getFullStationName } from "./utils/getFullStationName.js";
 const app = express();
 const port = 3000;
 
@@ -87,7 +87,8 @@ app.post("/trains", (req, res) => {
       },
     })
     .then((response) => {
-      res.json(response.data);
+      const data = response.data.RESPONSE.RESULT[0].TrainMessage;
+      getFullStationName(data);
     })
     .catch((error) => {
       console.error(error);
