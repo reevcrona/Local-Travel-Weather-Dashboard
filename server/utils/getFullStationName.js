@@ -41,6 +41,6 @@ export const getFullStationName = (trainsData) => {
         for (const fData of apiRes) {
             tempObject[fData.LocationSignature] = fData.AdvertisedLocationName;
         }
-        console.log(tempObject);
+        console.log(apiRes);
     });
 };

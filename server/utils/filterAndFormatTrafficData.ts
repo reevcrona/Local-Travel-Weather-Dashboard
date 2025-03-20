@@ -2,7 +2,7 @@ import {
   Situation,
   FilterdDeviation,
   Deviation,
-} from "../types/trafikVerketResponseType";
+} from "../types/trafikverketResponseType";
 
 const addIfExists = <T, K extends keyof T>(obj: T, key: K, value: T[K]) => {
   if (value !== undefined && value !== null && value !== "") {

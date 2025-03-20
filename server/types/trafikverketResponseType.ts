@@ -45,7 +45,40 @@ export type Situation = {
   PublicationTime: string;
   VersionTime: string;
 };
-
+export type TrainMessageData = {
+  AffectedLocation: string[];
+  CountyNo: number[];
+  Deleted: boolean;
+  EventId: string;
+  ExternalDescription: string;
+  Geometry: {
+    SWEREF99TM: string;
+    WGS84: string;
+  };
+  LastUpdateDateTime: string;
+  ModifiedTime: string;
+  ReasonCodeText: string;
+  StartDateTime: string;
+};
+export type TrainStationData = {
+  Advertised: boolean;
+  AdvertisedLocationName: string;
+  AdvertisedShortLocationName: string;
+  PrimaryLocationCode: string;
+  CountryCode: string;
+  CountyNo: number[];
+  Deleted: boolean;
+  Geometry: {
+    SWEREF99TM: string;
+    WGS84: string;
+  };
+  LocationInformationText: string;
+  LocationSignature: string;
+  PlatformLine: string[];
+  Prognosticated: boolean;
+  OfficialLocationName: string;
+  ModifiedTime: string;
+};
 export type TrafikverketResponse = {
   RESPONSE: {
     RESULT: Array<{
@@ -53,7 +86,20 @@ export type TrafikverketResponse = {
     }>;
   };
 };
-
+export type TrafikverketTrainMessageResponse = {
+  RESPONSE: {
+    RESULT: Array<{
+      TrainMessage: TrainMessageData[];
+    }>;
+  };
+};
+export type TrafikverketTrainStationResponse = {
+  RESPONSE: {
+    RESULT: Array<{
+      TrainStation: TrainStationData[];
+    }>;
+  };
+};
 export type FilterdDeviation = {
   LocationDescriptor: string;
   RoadNumber: string;

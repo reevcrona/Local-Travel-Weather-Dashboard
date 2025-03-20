@@ -2,7 +2,10 @@ import express, { response } from "express";
 import cors from "cors";
 import axios from "axios";
 import dotenv from "dotenv";
-import { TrafikverketResponse } from "./types/trafikVerketResponseType";
+import {
+  TrafikverketResponse,
+  TrafikverketTrainMessageResponse,
+} from "./types/trafikverketResponseType";
 import {
   filterAndFormatTrafficData,
   sortFilterdDeviations,
@@ -81,7 +84,7 @@ app.post("/trains", (req, res) => {
   `;
 
   axios
-    .post(API_URL, xmlData, {
+    .post<TrafikverketTrainMessageResponse>(API_URL, xmlData, {
       headers: {
         "Content-Type": "text/xml",
       },
