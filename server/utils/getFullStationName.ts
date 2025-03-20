@@ -8,7 +8,7 @@ const fetchFullStationNames = async (xmlData: any) => {
         "Content-Type": "text/xml",
       },
     });
-    return response.data.RESPONSE.RESULT[0].TrainStation[0];
+    return response.data.RESPONSE.RESULT[0].TrainStation;
   } catch (error) {
     console.error(`Failed fetching station full names ${error}`);
   }
@@ -34,6 +34,11 @@ export const getFullStationName = (trainsData: any) => {
 </REQUEST>`;
 
   fetchFullStationNames(xmlData).then((apiRes: any) => {
-    console.log(apiRes);
+    const tempObject: any = {};
+
+    for (const fData of apiRes) {
+      tempObject[fData.LocationSignature] = fData.AdvertisedLocationName;
+    }
+    console.log(tempObject);
   });
 };
