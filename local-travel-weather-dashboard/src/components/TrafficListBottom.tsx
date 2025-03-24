@@ -21,6 +21,12 @@ function TrafficListBottom({
     );
   }
 
+  function isTrainDeviation(
+    info: Deviation | TrainDeviation,
+  ): info is TrainDeviation {
+    return (info as TrainDeviation).AffectedLocations !== undefined;
+  }
+
   return (
     <div className="bottom-container flex flex-col justify-between gap-4 px-5 pt-4 pb-4 @min-bottomContainerCol/main:flex-row">
       <div className="flex flex-1/6 flex-col">
@@ -52,6 +58,16 @@ function TrafficListBottom({
                 </li>
               ))}
             </ul>
+          </div>
+        ) : null}
+        {isTrainDeviation(info) && info.AffectedLocations ? (
+          <div className="flex flex-col">
+            <h4 className="font-bold text-white">
+              Stationer där tågtrafiken kan påverkas
+            </h4>
+            <p className="w-full text-xs tracking-wide break-words text-white marker:text-2xl">
+              {info.AffectedLocations.join(", ")}
+            </p>
           </div>
         ) : null}
       </div>
