@@ -4,27 +4,24 @@ import { useCombinedTrafficStore } from "../stores/combinedTrafficStore";
 import TrafficListTop from "./TrafficListTop";
 import TrafficTextHeader from "./TrafficTextHeader";
 import TrafficListBottom from "./TrafficListBottom";
+import { FaSearch } from "react-icons/fa";
 
 function Traffic() {
-  const fetchAllData = useCombinedTrafficStore(
-    (state) => state.fetchAllTrafficData,
-  );
   const [activeFilter, setActiveFilter] = useState<"all" | "trains" | "roads">(
     "all",
   );
   const contentRef = useRef<HTMLDivElement>(null);
+
   const coordinates = useCoordinatesStore((state) => state.coordinates);
-  const trainsTrafficData = useCombinedTrafficStore(
-    (state) => state.trainsData,
-  );
-  const trafficData = useCombinedTrafficStore((state) => state.trafficData);
+  const { fetchAllTrafficData, trafficData, trainsData, hasFetched } =
+    useCombinedTrafficStore();
 
   const { lat, lng } = coordinates;
 
   useEffect(() => {
     if (lat === 0 && lng === 0) return;
-    fetchAllData(lat, lng);
-    console.log(trainsTrafficData);
+    fetchAllTrafficData(lat, lng);
+    console.log(trainsData);
     console.log(coordinates);
   }, [coordinates]);
   useEffect(() => {
@@ -50,7 +47,7 @@ function Traffic() {
     });
   };
   const renderTrainData = () => {
-    return trainsTrafficData.map((info, index) => {
+    return trainsData.map((info, index) => {
       return (
         <div
           key={index}
@@ -74,13 +71,13 @@ function Traffic() {
             className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "all" ? "bg-cardcColor text-white" : "bg-transparent"}`}
             onClick={() => setActiveFilter("all")}
           >
-            Alla {trafficData.length + trainsTrafficData.length}
+            Alla {trafficData.length + trainsData.length}
           </button>
           <button
             className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "trains" ? "bg-cardcColor text-white" : "bg-transparent"}`}
             onClick={() => setActiveFilter("trains")}
           >
-            Tåg {trainsTrafficData.length}
+            Tåg {trainsData.length}
           </button>
           <button
             className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "roads" ? "bg-cardcColor text-white" : "bg-transparent"}`}
@@ -91,14 +88,23 @@ function Traffic() {
         </div>
         <div
           ref={contentRef}
-          className="@container/main flex max-h-[600px] min-h-[500px] w-full max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4"
+          className={`@container/main flex max-h-[600px] min-h-[500px] w-full ${!hasFetched && "justify-center"} max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
         >
           {(activeFilter === "all" || activeFilter === "roads") &&
             trafficData &&
             renderTrafficData()}
           {(activeFilter === "all" || activeFilter === "trains") &&
-            trainsTrafficData &&
+            trainsData &&
             renderTrainData()}
+          {!hasFetched && (
+            <div className="flex h-full flex-col items-center justify-center text-gray-400">
+              <FaSearch className="h-10 w-full" />
+              <p className="mt-2 text-lg">Ingen trafikdata laddad</p>
+              <p className="text-sm">
+                Välj en plats för att visa trafikinformation
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>

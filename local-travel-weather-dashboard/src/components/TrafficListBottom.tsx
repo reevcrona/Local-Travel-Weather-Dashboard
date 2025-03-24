@@ -53,8 +53,8 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
           </div>
         ) : null}
         {isTrainDeviation(info) && info.AffectedLocations ? (
-          <div className="flex flex-col overflow-hidden rounded-lg bg-headerBg p-3">
-            <h4 className="font-bold text-white">
+          <div className="flex flex-col overflow-hidden rounded-lg border-l-4 border-[#1282A2] bg-headerBg p-3">
+            <h4 className="mb-1 font-bold text-white">
               Stationer där tågtrafiken kan påverkas
             </h4>
             <p
@@ -84,10 +84,12 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
       <div className="flex flex-1 items-center justify-start @min-bottomContainerCol/main:justify-end">
         <div className="flex w-full max-w-[400px] flex-col items-center justify-center rounded-lg bg-headerBg px-2 @min-bottomContainerCol/main:mt-0 @min-bottomContainerCol/main:flex-col">
           <h4 className="py-4 text-xl text-white">Tidsplan</h4>
-          <div className="flex gap-6 pb-5">
+          <div
+            className={`flex ${info.UpdateType === "Traffic" ? "gap-6" : "gap-0"} pb-5`}
+          >
             <div className="flex items-center gap-2">
               <div
-                className={`flex h-8 w-8 items-center justify-center rounded-full ${isDeviation(info) && info.SeverityCode === 2 ? "bg-trafficGrayHeader" : isDeviation(info) && info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
+                className={`flex h-8 w-8 items-center justify-center rounded-full ${isDeviation(info) && info.SeverityCode === 2 ? "bg-trafficGrayHeader" : isDeviation(info) && info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : isDeviation(info) && info.SeverityCode === 5 ? "bg-trafficRedHeader" : "bg-[#1282A2]"}`}
               >
                 <FaRegCalendarAlt className="text-white" />
               </div>
