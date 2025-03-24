@@ -4,6 +4,7 @@ import {
   TrainStationData,
   TrafikverketTrainStationResponse,
 } from "../types/trafikverketResponseType";
+import { formatTimeProperty } from "./filterAndFormatTrafficData.js";
 
 const fetchFullStationNames = async (xmlData: string) => {
   const API_URL = "https://api.trafikinfo.trafikverket.se/v2/data.json";
@@ -51,11 +52,17 @@ export const getFullStationName = async (trainsData: TrainMessageData[]) => {
   }
 
   const updatedTrainsData = trainsData.map((train) => {
-    const updatedTrain = { ...train };
+    const updatedTrain = {
+      ExternalDescription: train.ExternalDescription,
+      AffectedLocations: train.AffectedLocation.map((location) => {
+        return locationMap[location] || location;
+      }),
+      StartDateTime: formatTimeProperty(train.StartDateTime),
+      VersionTime: formatTimeProperty(train.ModifiedTime),
+      ReasonCodeText: train.ReasonCodeText,
+      UpdateType: "Train",
+    };
 
-    updatedTrain.AffectedLocation = train.AffectedLocation.map((location) => {
-      return locationMap[location] || location;
-    });
     return updatedTrain;
   });
   return updatedTrainsData;

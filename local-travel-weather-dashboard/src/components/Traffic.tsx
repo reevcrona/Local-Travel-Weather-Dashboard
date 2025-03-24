@@ -28,8 +28,8 @@ function Traffic() {
 
   useEffect(() => {
     if (lat === 0 && lng === 0) return;
-    fetchTrainsData();
-    console.log(trainsData);
+    fetchTrafficData(lat, lng);
+    console.log(trafficData);
     console.log(coordinates);
   }, [coordinates]);
 

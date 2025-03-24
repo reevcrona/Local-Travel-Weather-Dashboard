@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import axios from "axios";
+import { formatTimeProperty } from "./filterAndFormatTrafficData.js";
 const fetchFullStationNames = (xmlData) => __awaiter(void 0, void 0, void 0, function* () {
     const API_URL = "https://api.trafikinfo.trafikverket.se/v2/data.json";
     try {
@@ -44,10 +45,16 @@ export const getFullStationName = (trainsData) => __awaiter(void 0, void 0, void
         }
     }
     const updatedTrainsData = trainsData.map((train) => {
-        const updatedTrain = Object.assign({}, train);
-        updatedTrain.AffectedLocation = train.AffectedLocation.map((location) => {
-            return locationMap[location] || location;
-        });
+        const updatedTrain = {
+            ExternalDescription: train.ExternalDescription,
+            AffectedLocations: train.AffectedLocation.map((location) => {
+                return locationMap[location] || location;
+            }),
+            StartDateTime: formatTimeProperty(train.StartDateTime),
+            VersionTime: formatTimeProperty(train.ModifiedTime),
+            ReasonCodeText: train.ReasonCodeText,
+            UpdateType: "Train",
+        };
         return updatedTrain;
     });
     return updatedTrainsData;

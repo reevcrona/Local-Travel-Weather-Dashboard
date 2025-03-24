@@ -1,86 +1,43 @@
-import {
-  Situation,
-  FilterdDeviation,
-  Deviation,
-} from "../types/trafikverketResponseType";
-
-const addIfExists = <T, K extends keyof T>(obj: T, key: K, value: T[K]) => {
-  if (value !== undefined && value !== null && value !== "") {
-    obj[key] = value;
-  }
-};
+import { Situation, FilterdDeviation } from "../types/trafikverketResponseType";
 
 export const filterAndFormatTrafficData = (situations: Situation[]) => {
   return situations.map((situation) => {
-    const propertyArray: (keyof FilterdDeviation)[] = [
-      "LocationDescriptor",
-      "MessageType",
-      "Message",
-      "RoadNumber",
-      "SeverityText",
-      "TemporaryLimit",
-      "StartTime",
-      "EndTime",
-      "VersionTime",
-      "SeverityCode",
-    ];
-
-    const formattedData: FilterdDeviation = {
-      LocationDescriptor: "",
-      MessageType: "",
-      Message: "",
-      RoadNumber: "",
-      SeverityText: "",
-      TemporaryLimit: [],
-      StartTime: "",
-      EndTime: "",
-      VersionTime: "",
-      SeverityCode: 0,
-    };
     const firstDeviation = situation.Deviation[0];
 
-    propertyArray.forEach((property) => {
-      let value = firstDeviation[property];
-
-      if (
-        (property === "StartTime" ||
-          property === "EndTime" ||
-          property === "VersionTime") &&
-        typeof value === "string"
-      ) {
-        value = formatTimeProperty(value);
-      }
-      if (typeof value === "string" || typeof value === "number") {
-        addIfExists(formattedData, property, value);
-      }
-    });
+    const formattedData = {
+      LocationDescriptor: firstDeviation.LocationDescriptor || "",
+      MessageType: firstDeviation.MessageType || "",
+      Message: firstDeviation.Message || "",
+      RoadNumber: firstDeviation.RoadNumber || "",
+      SeverityText: firstDeviation.SeverityText || "",
+      StartTime: formatTimeProperty(firstDeviation.StartTime) || "",
+      EndTime: formatTimeProperty(firstDeviation.EndTime) || "",
+      VersionTime: formatTimeProperty(firstDeviation.VersionTime) || "",
+      SeverityCode: firstDeviation.SeverityCode || 0,
+      UpdateType: "Traffic",
+    };
 
     if (situation.Deviation.length > 1) {
       const extraDeviations = situation.Deviation.slice(1);
       const tempLimits: string[] = [];
 
-      if (extraDeviations.length > 1) {
+      if (firstDeviation.TemporaryLimit) {
+        tempLimits.push(firstDeviation.TemporaryLimit);
+      }
+
+      if (situation.Deviation.length > 1) {
         extraDeviations.forEach((deviation) => {
           if (deviation.TemporaryLimit) {
             tempLimits.push(deviation.TemporaryLimit);
           }
         });
       }
-
-      if (extraDeviations.length === 1 && extraDeviations[0].TemporaryLimit) {
-        tempLimits.push(extraDeviations[0].TemporaryLimit);
-      }
-
       if (tempLimits.length > 0) {
-        formattedData.TemporaryLimit = tempLimits;
-      } else {
-        delete formattedData.TemporaryLimit;
+        return {
+          ...formattedData,
+          TemporaryLimit: tempLimits,
+        };
       }
-    } else if (
-      formattedData.TemporaryLimit &&
-      formattedData.TemporaryLimit.length < 1
-    ) {
-      delete formattedData.TemporaryLimit;
     }
     return formattedData;
   });
