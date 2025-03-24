@@ -1,31 +1,37 @@
-import { useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
-import { useTrafficStore } from "../stores/trafficStore";
-import { useTrainsTrafficStore } from "../stores/trainsTrafficStore";
+import { useCombinedTrafficStore } from "../stores/combinedTrafficStore";
 import TrafficListTop from "./TrafficListTop";
 import TrafficTextHeader from "./TrafficTextHeader";
 import TrafficListBottom from "./TrafficListBottom";
 
 function Traffic() {
-  const fetchTrafficData = useTrafficStore((state) => state.fetchTrafficData);
-  const trafficData = useTrafficStore((state) => state.trafficData);
+  const fetchAllData = useCombinedTrafficStore(
+    (state) => state.fetchAllTrafficData,
+  );
+  const [activeFilter, setActiveFilter] = useState<"all" | "trains" | "roads">(
+    "all",
+  );
+  const contentRef = useRef<HTMLDivElement>(null);
   const coordinates = useCoordinatesStore((state) => state.coordinates);
+  const trainsTrafficData = useCombinedTrafficStore(
+    (state) => state.trainsData,
+  );
+  const trafficData = useCombinedTrafficStore((state) => state.trafficData);
 
-  const trainsTrafficData = useTrainsTrafficStore(
-    (state) => state.trainsTrafficData,
-  );
-  const fetchTrainsData = useTrainsTrafficStore(
-    (state) => state.fetchTrainsTrafficData,
-  );
   const { lat, lng } = coordinates;
 
   useEffect(() => {
     if (lat === 0 && lng === 0) return;
-    fetchTrainsData(lat, lng);
+    fetchAllData(lat, lng);
     console.log(trainsTrafficData);
     console.log(coordinates);
   }, [coordinates]);
-
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [activeFilter]);
   const renderTrafficData = () => {
     return trafficData.map((info, index) => {
       return (
@@ -62,9 +68,37 @@ function Traffic() {
   };
   return (
     <>
-      <div className="] flex w-full justify-center">
-        <div className="@container/main flex max-h-[600px] min-h-[500px] w-full max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4">
-          {trainsTrafficData && renderTrainData()}
+      <div className="flex w-full flex-col items-center justify-center">
+        <div className="mb-2 flex w-full max-w-6xl gap-2.5">
+          <button
+            className="border-2 p-2"
+            onClick={() => setActiveFilter("all")}
+          >
+            Alla {trafficData.length + trainsTrafficData.length}
+          </button>
+          <button
+            className="border-2 p-2"
+            onClick={() => setActiveFilter("trains")}
+          >
+            Tåg {trainsTrafficData.length}
+          </button>
+          <button
+            className="border-2 p-2"
+            onClick={() => setActiveFilter("roads")}
+          >
+            Väg {trafficData.length}
+          </button>
+        </div>
+        <div
+          ref={contentRef}
+          className="@container/main flex max-h-[600px] min-h-[500px] w-full max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4"
+        >
+          {(activeFilter === "all" || activeFilter === "roads") &&
+            trafficData &&
+            renderTrafficData()}
+          {(activeFilter === "all" || activeFilter === "trains") &&
+            trainsTrafficData &&
+            renderTrainData()}
         </div>
       </div>
     </>
