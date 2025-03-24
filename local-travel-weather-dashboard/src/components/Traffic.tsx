@@ -69,21 +69,21 @@ function Traffic() {
   return (
     <>
       <div className="flex w-full flex-col items-center justify-center">
-        <div className="mb-2 flex w-full max-w-6xl gap-2.5">
+        <div className="mb-1 flex w-full max-w-6xl gap-2.5">
           <button
-            className="border-2 p-2"
+            className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "all" ? "bg-cardcColor text-white" : "bg-transparent"}`}
             onClick={() => setActiveFilter("all")}
           >
             Alla {trafficData.length + trainsTrafficData.length}
           </button>
           <button
-            className="border-2 p-2"
+            className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "trains" ? "bg-cardcColor text-white" : "bg-transparent"}`}
             onClick={() => setActiveFilter("trains")}
           >
             Tåg {trainsTrafficData.length}
           </button>
           <button
-            className="border-2 p-2"
+            className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "roads" ? "bg-cardcColor text-white" : "bg-transparent"}`}
             onClick={() => setActiveFilter("roads")}
           >
             Väg {trafficData.length}
