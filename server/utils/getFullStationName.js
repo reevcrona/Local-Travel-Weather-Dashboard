@@ -22,7 +22,7 @@ const fetchFullStationNames = (xmlData) => __awaiter(void 0, void 0, void 0, fun
         console.error(`Failed fetching station full names ${error}`);
     }
 });
-export const getFullStationName = (trainsData) => {
+export const getFullStationName = (trainsData) => __awaiter(void 0, void 0, void 0, function* () {
     const stations = new Set(trainsData.flatMap((ad) => ad.AffectedLocation));
     const filtersArray = Array.from(stations).map((ab) => `<EQ name="LocationSignature" value="${ab}"/>`);
     const filtersString = filtersArray.join("\n");
@@ -36,11 +36,19 @@ export const getFullStationName = (trainsData) => {
     </FILTER>
   </QUERY>
 </REQUEST>`;
-    fetchFullStationNames(xmlData).then((apiRes) => {
-        const tempObject = {};
+    const apiRes = yield fetchFullStationNames(xmlData);
+    const locationMap = {};
+    if (apiRes) {
         for (const fData of apiRes) {
-            tempObject[fData.LocationSignature] = fData.AdvertisedLocationName;
+            locationMap[fData.LocationSignature] = fData.AdvertisedLocationName;
         }
-        console.log(apiRes);
+    }
+    const updatedTrainsData = trainsData.map((train) => {
+        const updatedTrain = Object.assign({}, train);
+        updatedTrain.AffectedLocation = train.AffectedLocation.map((location) => {
+            return locationMap[location] || location;
+        });
+        return updatedTrain;
     });
-};
+    return updatedTrainsData;
+});

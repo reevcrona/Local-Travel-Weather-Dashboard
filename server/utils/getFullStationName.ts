@@ -23,7 +23,7 @@ const fetchFullStationNames = async (xmlData: string) => {
   }
 };
 
-export const getFullStationName = (trainsData: TrainMessageData[]) => {
+export const getFullStationName = async (trainsData: TrainMessageData[]) => {
   const stations = new Set(
     trainsData.flatMap((ad: TrainMessageData) => ad.AffectedLocation)
   );
@@ -42,14 +42,21 @@ export const getFullStationName = (trainsData: TrainMessageData[]) => {
   </QUERY>
 </REQUEST>`;
 
-  fetchFullStationNames(xmlData).then((apiRes) => {
-    const tempObject: any = {};
-    if (apiRes) {
-      for (const fData of apiRes) {
-        tempObject[fData.LocationSignature] = fData.AdvertisedLocationName;
-      }
+  const apiRes = await fetchFullStationNames(xmlData);
+  const locationMap: Record<string, string> = {};
+  if (apiRes) {
+    for (const fData of apiRes) {
+      locationMap[fData.LocationSignature] = fData.AdvertisedLocationName;
     }
+  }
 
-    console.log(apiRes);
+  const updatedTrainsData = trainsData.map((train) => {
+    const updatedTrain = { ...train };
+
+    updatedTrain.AffectedLocation = train.AffectedLocation.map((location) => {
+      return locationMap[location] || location;
+    });
+    return updatedTrain;
   });
+  return updatedTrainsData;
 };

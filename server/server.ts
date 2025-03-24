@@ -91,7 +91,7 @@ app.post("/trains", (req, res) => {
     })
     .then((response) => {
       const data = response.data.RESPONSE.RESULT[0].TrainMessage;
-      getFullStationName(data);
+      getFullStationName(data).then((updatedData) => console.log(updatedData));
     })
     .catch((error) => {
       console.error(error);
