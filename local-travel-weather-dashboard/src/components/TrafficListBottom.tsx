@@ -2,7 +2,10 @@ import { FaRegCalendarAlt, FaFlagCheckered } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
 import { Deviation, TrainDeviation } from "../types/trafficTypes";
 import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { useState } from "react";
 function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
   function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
     return (
       (info as Deviation).Message !== undefined ||
@@ -54,12 +57,19 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
             <h4 className="font-bold text-white">
               Stationer där tågtrafiken kan påverkas
             </h4>
-            <p className="max-h-[45px] w-full text-xs tracking-wide break-words overflow-ellipsis text-white marker:text-2xl">
-              {info.AffectedLocations.length > 6
-                ? `${info.AffectedLocations.slice(0, 15).join(", ")} ...`
+            <p
+              className={`${
+                !isExpanded ? "line-clamp-3" : "line-clamp-none"
+              } w-full text-xs tracking-wide break-words text-white transition-all duration-500`}
+            >
+              {info.AffectedLocations.length > 6 && !isExpanded
+                ? `${info.AffectedLocations.slice(0, 18).join(", ")} ...`
                 : info.AffectedLocations.join(", ")}
               {info.AffectedLocations.length > 6 && (
-                <IoMdArrowDropdownCircle className="ml-2 inline-block text-xl" />
+                <IoMdArrowDropdownCircle
+                  onClick={() => setIsExpanded((prevState) => !prevState)}
+                  className="ml-2 inline-block cursor-pointer text-xl text-[#1282A2]"
+                />
               )}
             </p>
           </div>
