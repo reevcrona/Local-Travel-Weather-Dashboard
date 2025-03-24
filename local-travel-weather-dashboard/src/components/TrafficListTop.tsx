@@ -1,17 +1,7 @@
-import { useTrafficStore } from "../stores/trafficStore";
-import { useTrainsTrafficStore } from "../stores/trainsTrafficStore";
 import { FaRoad } from "react-icons/fa";
+import { FaTrain } from "react-icons/fa6";
 import { Deviation, TrainDeviation } from "../types/trafficTypes";
-function TrafficListTop({
-  index,
-  info,
-}: {
-  index: number;
-  info: Deviation | TrainDeviation;
-}) {
-  const trafficData = useTrafficStore((state) => state.trafficData);
-  const trainsData = useTrainsTrafficStore((state) => state.trainsTrafficData);
-
+function TrafficListTop({ info }: { info: Deviation | TrainDeviation }) {
   function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
     return (
       (info as Deviation).Message !== undefined ||
@@ -34,7 +24,11 @@ function TrafficListTop({
 
         <div className="flex">
           <div className="pt-1">
-            <FaRoad className="text-3xl" />
+            {info.UpdateType === "Train" ? (
+              <FaTrain className="text-3xl" />
+            ) : (
+              <FaRoad className="text-3xl" />
+            )}
           </div>
 
           <h2 className="ml-3 text-2xl">

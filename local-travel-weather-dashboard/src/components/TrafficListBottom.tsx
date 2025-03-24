@@ -1,19 +1,8 @@
-import { useTrafficStore } from "../stores/trafficStore";
-import { useTrainsTrafficStore } from "../stores/trainsTrafficStore";
 import { FaRegCalendarAlt, FaFlagCheckered } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
 import { Deviation, TrainDeviation } from "../types/trafficTypes";
-
-function TrafficListBottom({
-  index,
-  info,
-}: {
-  index: number;
-  info: Deviation | TrainDeviation;
-}) {
-  const trafficData = useTrafficStore((state) => state.trafficData);
-  const trainsData = useTrainsTrafficStore((state) => state.trainsTrafficData);
-
+import { IoMdArrowDropdownCircle } from "react-icons/io";
+function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
   function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
     return (
       (info as Deviation).Message !== undefined ||
@@ -61,12 +50,17 @@ function TrafficListBottom({
           </div>
         ) : null}
         {isTrainDeviation(info) && info.AffectedLocations ? (
-          <div className="flex flex-col">
+          <div className="flex flex-col overflow-hidden rounded-lg bg-headerBg p-3">
             <h4 className="font-bold text-white">
               Stationer där tågtrafiken kan påverkas
             </h4>
-            <p className="w-full text-xs tracking-wide break-words text-white marker:text-2xl">
-              {info.AffectedLocations.join(", ")}
+            <p className="max-h-[45px] w-full text-xs tracking-wide break-words overflow-ellipsis text-white marker:text-2xl">
+              {info.AffectedLocations.length > 6
+                ? `${info.AffectedLocations.slice(0, 15).join(", ")} ...`
+                : info.AffectedLocations.join(", ")}
+              {info.AffectedLocations.length > 6 && (
+                <IoMdArrowDropdownCircle className="ml-2 inline-block text-xl" />
+              )}
             </p>
           </div>
         ) : null}
@@ -89,13 +83,19 @@ function TrafficListBottom({
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-mainContainerBg">
-                <FaFlagCheckered className="text-white" />
-              </div>
+              {isDeviation(info) && info.EndTime && (
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-mainContainerBg">
+                  <FaFlagCheckered className="text-white" />
+                </div>
+              )}
+
               <div className="flex flex-col">
-                <span className="mr-1.5 font-bold tracking-tight text-text-dark-400 @min-bottomContainerCol/main:mr-0">
-                  SLUTTID
-                </span>
+                {isDeviation(info) && info.EndTime && (
+                  <span className="mr-1.5 font-bold tracking-tight text-text-dark-400 @min-bottomContainerCol/main:mr-0">
+                    SLUTTID
+                  </span>
+                )}
+
                 <p className="font-medium text-white">
                   {isDeviation(info) && info.EndTime}
                 </p>

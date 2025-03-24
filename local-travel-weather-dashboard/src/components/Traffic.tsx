@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
 import { useTrafficStore } from "../stores/trafficStore";
 import { useTrainsTrafficStore } from "../stores/trainsTrafficStore";
-import axios from "axios";
 import TrafficListTop from "./TrafficListTop";
 import TrafficTextHeader from "./TrafficTextHeader";
 import TrafficListBottom from "./TrafficListBottom";
-import { TrainDeviation } from "../types/trafficTypes";
+
 function Traffic() {
   const fetchTrafficData = useTrafficStore((state) => state.fetchTrafficData);
   const trafficData = useTrafficStore((state) => state.trafficData);
@@ -37,9 +36,9 @@ function Traffic() {
           <div
             className={`absolute top-0 bottom-0 left-0 w-2 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
           ></div>
-          <TrafficListTop index={index} info={info} />
-          <TrafficTextHeader index={index} />
-          <TrafficListBottom index={index} info={info} />
+          <TrafficListTop info={info} />
+          <TrafficTextHeader info={info} />
+          <TrafficListBottom info={info} />
         </div>
       );
     });
@@ -47,11 +46,16 @@ function Traffic() {
   const renderTrainData = () => {
     return trainsTrafficData.map((info, index) => {
       return (
-        <div key={index}>
-          <div className={`absolute top-0 bottom-0 left-0 w-2`}></div>
-          <TrafficListTop index={index} info={info} />
-          <TrafficTextHeader index={index} />
-          <TrafficListBottom index={index} info={info} />
+        <div
+          key={index}
+          className="relative mb-4 rounded-xl border border-cardBorderColor bg-cardcColor"
+        >
+          <div
+            className={`absolute top-0 bottom-0 left-0 w-2 bg-[#1282A2]`}
+          ></div>
+          <TrafficListTop info={info} />
+          <TrafficTextHeader info={info} />
+          <TrafficListBottom info={info} />
         </div>
       );
     });
