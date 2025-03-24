@@ -1,5 +1,6 @@
 import Header from "./components/Header";
 import Traffic from "./components/Traffic";
+import Localweather from "./components/Localweather";
 import "./index.css";
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <>
       <Header />
       <Traffic />
+      <Localweather />
     </>
   );
 }
