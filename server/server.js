@@ -73,7 +73,11 @@ app.post("/trains", (req, res) => {
     })
         .then((response) => {
         const data = response.data.RESPONSE.RESULT[0].TrainMessage;
-        getFullStationName(data).then((updatedData) => console.log(updatedData));
+        getFullStationName(data)
+            .then((updatedData) => res.json(updatedData))
+            .catch((error) => {
+            console.log("Error fetching updated station names", error);
+        });
     })
         .catch((error) => {
         console.error(error);

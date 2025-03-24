@@ -1,8 +1,10 @@
 import { useTrafficStore } from "../stores/trafficStore";
+import { useTrainsTrafficStore } from "../stores/trainsTrafficStore";
 import { FaMapMarkerAlt } from "react-icons/fa";
 function TrafficTextHeader({ index }: { index: number }) {
   const trafficData = useTrafficStore((state) => state.trafficData);
-  const info = trafficData[index];
+  const trainsData = useTrainsTrafficStore((state) => state.trainsTrafficData);
+  const info = trafficData[index] || trainsData[index];
   return (
     <div className="px-5">
       <div className="header-text flex w-full max-w-[max-content] items-center rounded-lg bg-headerBg p-3">

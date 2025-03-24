@@ -1,18 +1,33 @@
 import { useTrafficStore } from "../stores/trafficStore";
+import { useTrainsTrafficStore } from "../stores/trainsTrafficStore";
 import { FaRoad } from "react-icons/fa";
-
-function TrafficListTop({ index }: { index: number }) {
+import { Deviation, TrainDeviation } from "../types/trafficTypes";
+function TrafficListTop({
+  index,
+  info,
+}: {
+  index: number;
+  info: Deviation | TrainDeviation;
+}) {
   const trafficData = useTrafficStore((state) => state.trafficData);
-  const info = trafficData[index];
+  const trainsData = useTrainsTrafficStore((state) => state.trainsTrafficData);
+
+  function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
+    return (
+      (info as Deviation).Message !== undefined ||
+      (info as Deviation).TemporaryLimit !== undefined
+    );
+  }
+
   return (
     <div
       className={`top-container flex flex-col justify-between px-5 py-5 text-white @min-trafficHeaderSmall/main:flex-row`}
     >
       <div className="flex flex-col">
         <h4
-          className={`mb-1.5 w-[max-content] rounded-full ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} px-3 py-1 text-center font-bold`}
+          className={`mb-1.5 w-[max-content] rounded-full ${isDeviation(info) && info.SeverityCode && info.SeverityCode === 2 ? "bg-trafficGrayHeader" : isDeviation(info) && info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} px-3 py-1 text-center font-bold`}
         >
-          {info.SeverityText}
+          {isDeviation(info) && info.SeverityText}
         </h4>
         <div className="flex">
           <div className="pt-1">
@@ -20,8 +35,10 @@ function TrafficListTop({ index }: { index: number }) {
           </div>
 
           <h2 className="ml-3 text-2xl">
-            {info.MessageType}
-            {info.RoadNumber !== "" ? ` - ${info.RoadNumber}` : ""}
+            {isDeviation(info) && info.MessageType}
+            {isDeviation(info) && info.RoadNumber !== ""
+              ? ` - ${info.RoadNumber}`
+              : ""}
           </h2>
         </div>
       </div>

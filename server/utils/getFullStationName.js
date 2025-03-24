@@ -46,13 +46,13 @@ export const getFullStationName = (trainsData) => __awaiter(void 0, void 0, void
     }
     const updatedTrainsData = trainsData.map((train) => {
         const updatedTrain = {
-            ExternalDescription: train.ExternalDescription,
+            LocationDescriptor: train.ExternalDescription,
             AffectedLocations: train.AffectedLocation.map((location) => {
                 return locationMap[location] || location;
             }),
-            StartDateTime: formatTimeProperty(train.StartDateTime),
+            StartTime: formatTimeProperty(train.StartDateTime),
             VersionTime: formatTimeProperty(train.ModifiedTime),
-            ReasonCodeText: train.ReasonCodeText,
+            MessageType: train.ReasonCodeText,
             UpdateType: "Train",
         };
         return updatedTrain;

@@ -1,35 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
 import { useTrafficStore } from "../stores/trafficStore";
+import { useTrainsTrafficStore } from "../stores/trainsTrafficStore";
 import axios from "axios";
 import TrafficListTop from "./TrafficListTop";
 import TrafficTextHeader from "./TrafficTextHeader";
 import TrafficListBottom from "./TrafficListBottom";
+import { TrainDeviation } from "../types/trafficTypes";
 function Traffic() {
   const fetchTrafficData = useTrafficStore((state) => state.fetchTrafficData);
   const trafficData = useTrafficStore((state) => state.trafficData);
   const coordinates = useCoordinatesStore((state) => state.coordinates);
-  const [trainsData, setTrainsData] = useState<any>([]);
+
+  const trainsTrafficData = useTrainsTrafficStore(
+    (state) => state.trainsTrafficData,
+  );
+  const fetchTrainsData = useTrainsTrafficStore(
+    (state) => state.fetchTrainsTrafficData,
+  );
   const { lat, lng } = coordinates;
-
-  const fetchTrainsData = async () => {
-    const { lat, lng } = coordinates;
-
-    try {
-      const response = await axios.post("http://localhost:3000/trains", {
-        lat: lat,
-        lng: lng,
-      });
-      setTrainsData(response.data);
-    } catch (error) {
-      console.error("something failed in Traffic component", error);
-    }
-  };
 
   useEffect(() => {
     if (lat === 0 && lng === 0) return;
-    fetchTrafficData(lat, lng);
-    console.log(trafficData);
+    fetchTrainsData(lat, lng);
+    console.log(trainsTrafficData);
     console.log(coordinates);
   }, [coordinates]);
 
@@ -43,19 +37,30 @@ function Traffic() {
           <div
             className={`absolute top-0 bottom-0 left-0 w-2 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
           ></div>
-          <TrafficListTop index={index} />
+          <TrafficListTop index={index} info={info} />
           <TrafficTextHeader index={index} />
-          <TrafficListBottom index={index} />
+          <TrafficListBottom index={index} info={info} />
         </div>
       );
     });
   };
-
+  const renderTrainData = () => {
+    return trainsTrafficData.map((info, index) => {
+      return (
+        <div key={index}>
+          <div className={`absolute top-0 bottom-0 left-0 w-2`}></div>
+          <TrafficListTop index={index} info={info} />
+          <TrafficTextHeader index={index} />
+          <TrafficListBottom index={index} info={info} />
+        </div>
+      );
+    });
+  };
   return (
     <>
       <div className="] flex w-full justify-center">
         <div className="@container/main flex max-h-[600px] min-h-[500px] w-full max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4">
-          {trafficData && renderTrafficData()}
+          {trainsTrafficData && renderTrainData()}
         </div>
       </div>
     </>

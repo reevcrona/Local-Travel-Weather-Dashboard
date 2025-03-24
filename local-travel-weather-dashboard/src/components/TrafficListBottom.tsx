@@ -1,16 +1,35 @@
 import { useTrafficStore } from "../stores/trafficStore";
+import { useTrainsTrafficStore } from "../stores/trainsTrafficStore";
 import { FaRegCalendarAlt, FaFlagCheckered } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
+import { Deviation, TrainDeviation } from "../types/trafficTypes";
 
-function TrafficListBottom({ index }: { index: number }) {
+function TrafficListBottom({
+  index,
+  info,
+}: {
+  index: number;
+  info: Deviation | TrainDeviation;
+}) {
   const trafficData = useTrafficStore((state) => state.trafficData);
-  const info = trafficData[index];
+  const trainsData = useTrainsTrafficStore((state) => state.trainsTrafficData);
+
+  function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
+    return (
+      (info as Deviation).Message !== undefined ||
+      (info as Deviation).TemporaryLimit !== undefined
+    );
+  }
 
   return (
     <div className="bottom-container flex flex-col justify-between gap-4 px-5 pt-4 pb-4 @min-bottomContainerCol/main:flex-row">
       <div className="flex flex-1/6 flex-col">
-        <p className="mb-3.5 pr-3 text-white">{info.Message}</p>
-        {info.TemporaryLimit && info.TemporaryLimit.length > 0 ? (
+        {isDeviation(info) && (
+          <p className="mb-3.5 pr-3 text-white">{info.Message}</p>
+        )}
+        {isDeviation(info) &&
+        info.TemporaryLimit &&
+        info.TemporaryLimit.length > 0 ? (
           <div
             className={`max-w-[480px] rounded-lg border-l-4 ${info.SeverityCode === 2 ? "border-trafficGrayHeader" : info.SeverityCode === 4 ? "border-trafficDarkOliveHeader" : "border-trafficRedHeader"} bg-headerBg p-4`}
           >
@@ -42,7 +61,7 @@ function TrafficListBottom({ index }: { index: number }) {
           <div className="flex gap-6 pb-5">
             <div className="flex items-center gap-2">
               <div
-                className={`flex h-8 w-8 items-center justify-center rounded-full ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
+                className={`flex h-8 w-8 items-center justify-center rounded-full ${isDeviation(info) && info.SeverityCode === 2 ? "bg-trafficGrayHeader" : isDeviation(info) && info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
               >
                 <FaRegCalendarAlt className="text-white" />
               </div>
@@ -61,7 +80,9 @@ function TrafficListBottom({ index }: { index: number }) {
                 <span className="mr-1.5 font-bold tracking-tight text-text-dark-400 @min-bottomContainerCol/main:mr-0">
                   SLUTTID
                 </span>
-                <p className="font-medium text-white">{info.EndTime}</p>
+                <p className="font-medium text-white">
+                  {isDeviation(info) && info.EndTime}
+                </p>
               </div>
             </div>
           </div>

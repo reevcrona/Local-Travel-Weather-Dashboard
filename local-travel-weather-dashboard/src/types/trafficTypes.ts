@@ -10,3 +10,11 @@ export type Deviation = {
   TemporaryLimit?: string[];
   SeverityCode: number;
 };
+export type TrainDeviation = {
+  ExternalDescription: string;
+  AffectedLocations: string[];
+  StartTime: string;
+  VersionTime: string;
+  MessageType: string;
+  UpdateType: string;
+};
