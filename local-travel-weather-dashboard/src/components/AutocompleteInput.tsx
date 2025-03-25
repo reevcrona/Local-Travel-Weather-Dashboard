@@ -22,7 +22,6 @@ function AutocompleteInput() {
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<null | HTMLInputElement>(null);
 
-  const coordinates = useCoordinatesStore((state) => state.coordinates);
   const setCoordinates = useCoordinatesStore((state) => state.setCoordinates);
 
   useEffect(() => {
