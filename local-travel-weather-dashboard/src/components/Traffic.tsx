@@ -21,14 +21,16 @@ function Traffic() {
   useEffect(() => {
     if (lat === 0 && lng === 0) return;
     fetchAllTrafficData(lat, lng);
-    console.log(trainsData);
+    console.log(trafficData);
     console.log(coordinates);
   }, [coordinates]);
+
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [activeFilter]);
+
   const renderTrafficData = () => {
     return trafficData.map((info, index) => {
       return (

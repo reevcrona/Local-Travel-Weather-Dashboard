@@ -13,8 +13,9 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
       StartTime: formatTimeProperty(firstDeviation.StartTime) || "",
       EndTime: formatTimeProperty(firstDeviation.EndTime) || "",
       VersionTime: formatTimeProperty(firstDeviation.VersionTime) || "",
-      SeverityCode: firstDeviation.SeverityCode || 0,
+      SeverityCode: firstDeviation.SeverityCode || 1,
       UpdateType: "Traffic",
+      MessageCodeValue: firstDeviation.MessageCodeValue,
     };
 
     if (situation.Deviation.length > 1) {

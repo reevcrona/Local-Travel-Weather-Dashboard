@@ -26,7 +26,7 @@ const fetchFullStationNames = async (xmlData: string) => {
 
 export const getFullStationName = async (trainsData: TrainMessageData[]) => {
   const stations = new Set(
-    trainsData.flatMap((ad: TrainMessageData) => ad.AffectedLocation)
+    trainsData.flatMap((ab: TrainMessageData) => ab.AffectedLocation)
   );
   const filtersArray: string[] = Array.from(stations).map(
     (ab: any) => `<EQ name="LocationSignature" value="${ab}"/>`

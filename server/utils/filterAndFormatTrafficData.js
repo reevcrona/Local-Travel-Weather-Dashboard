@@ -10,8 +10,9 @@ export const filterAndFormatTrafficData = (situations) => {
             StartTime: formatTimeProperty(firstDeviation.StartTime) || "",
             EndTime: formatTimeProperty(firstDeviation.EndTime) || "",
             VersionTime: formatTimeProperty(firstDeviation.VersionTime) || "",
-            SeverityCode: firstDeviation.SeverityCode || 0,
+            SeverityCode: firstDeviation.SeverityCode || 1,
             UpdateType: "Traffic",
+            MessageCodeValue: firstDeviation.MessageCodeValue,
         };
         if (situation.Deviation.length > 1) {
             const extraDeviations = situation.Deviation.slice(1);

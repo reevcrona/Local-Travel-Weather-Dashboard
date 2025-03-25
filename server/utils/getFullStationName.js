@@ -24,7 +24,7 @@ const fetchFullStationNames = (xmlData) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 export const getFullStationName = (trainsData) => __awaiter(void 0, void 0, void 0, function* () {
-    const stations = new Set(trainsData.flatMap((ad) => ad.AffectedLocation));
+    const stations = new Set(trainsData.flatMap((ab) => ab.AffectedLocation));
     const filtersArray = Array.from(stations).map((ab) => `<EQ name="LocationSignature" value="${ab}"/>`);
     const filtersString = filtersArray.join("\n");
     const xmlData = `<REQUEST>
