@@ -1,0 +1,1 @@
+Third Week: During this phase Gustav and Lucas started working on their components. Gustav started with the weather component and Lucas started working with the departure component. Jacob also got started with the traffic component. We also agreed on waiting on the design for the last part of the project (we agreed on a blue color theme for our project).
