@@ -7,6 +7,7 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
     const formattedData = {
       LocationDescriptor: firstDeviation.LocationDescriptor || "",
       MessageType: firstDeviation.MessageType || "",
+      MessageCode: firstDeviation.MessageCode || "",
       Message: firstDeviation.Message || "",
       RoadNumber: firstDeviation.RoadNumber || "",
       SeverityText: firstDeviation.SeverityText || "",
@@ -15,7 +16,6 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
       VersionTime: formatTimeProperty(firstDeviation.VersionTime) || "",
       SeverityCode: firstDeviation.SeverityCode || 1,
       UpdateType: "Traffic",
-      MessageCodeValue: firstDeviation.MessageCodeValue,
     };
 
     if (situation.Deviation.length > 1) {

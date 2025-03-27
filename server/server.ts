@@ -38,7 +38,7 @@ app.post("/traffic", (req, res) => {
   const xmlData = `
 <REQUEST>
     <LOGIN authenticationkey="${TRAFIKVERKET_API_KEY}"/>
-    <QUERY objecttype="Situation" schemaversion="1.5" limit="20">
+    <QUERY objecttype="Situation" schemaversion="1.5" limit="50">
         <FILTER>
             <NEAR name="Deviation.Geometry.Point.WGS84" value="${lng} ${lat}"/>
             

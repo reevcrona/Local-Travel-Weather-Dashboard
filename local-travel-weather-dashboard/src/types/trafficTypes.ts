@@ -7,6 +7,7 @@ export type Deviation = {
   EndTime: string;
   Message: string;
   MessageType: string;
+  MessageCode: string;
   TemporaryLimit?: string[];
   SeverityCode: number;
   UpdateType: string;
@@ -17,5 +18,6 @@ export type TrainDeviation = {
   StartTime: string;
   VersionTime: string;
   MessageType: string;
+  MessageCode: string;
   UpdateType: string;
 };

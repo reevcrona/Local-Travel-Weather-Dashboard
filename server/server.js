@@ -25,7 +25,7 @@ app.post("/traffic", (req, res) => {
     const xmlData = `
 <REQUEST>
     <LOGIN authenticationkey="${TRAFIKVERKET_API_KEY}"/>
-    <QUERY objecttype="Situation" schemaversion="1.5" limit="20">
+    <QUERY objecttype="Situation" schemaversion="1.5" limit="50">
         <FILTER>
             <NEAR name="Deviation.Geometry.Point.WGS84" value="${lng} ${lat}"/>
             
@@ -45,6 +45,9 @@ app.post("/traffic", (req, res) => {
     })
         .then((response) => {
         const situations = response.data.RESPONSE.RESULT[0].Situation;
+        situations.forEach((dev) => {
+            console.log(dev.Deviation);
+        });
         const sortedData = sortFilterdDeviations(filterAndFormatTrafficData(situations));
         res.json(sortedData);
     })
