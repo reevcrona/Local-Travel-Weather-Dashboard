@@ -1,6 +1,11 @@
 export const filterAndFormatTrafficData = (situations) => {
-    return situations.map((situation) => {
+    const result = {
+        Road: [],
+        Ferry: [],
+    };
+    situations.forEach((situation) => {
         const firstDeviation = situation.Deviation[0];
+        const isFerryUpdate = firstDeviation.MessageType === "Färjor";
         const formattedData = {
             LocationDescriptor: firstDeviation.LocationDescriptor || "",
             MessageType: firstDeviation.MessageType || "",
@@ -12,7 +17,7 @@ export const filterAndFormatTrafficData = (situations) => {
             EndTime: formatTimeProperty(firstDeviation.EndTime) || "",
             VersionTime: formatTimeProperty(firstDeviation.VersionTime) || "",
             SeverityCode: firstDeviation.SeverityCode || 1,
-            UpdateType: "Traffic",
+            UpdateType: isFerryUpdate ? "Ferry" : "Traffic",
         };
         if (situation.Deviation.length > 1) {
             const extraDeviations = situation.Deviation.slice(1);
@@ -28,11 +33,17 @@ export const filterAndFormatTrafficData = (situations) => {
                 });
             }
             if (tempLimits.length > 0) {
-                return Object.assign(Object.assign({}, formattedData), { TemporaryLimit: tempLimits });
+                formattedData.TemporaryLimit = tempLimits;
             }
         }
-        return formattedData;
+        if (isFerryUpdate) {
+            result.Ferry.push(formattedData);
+        }
+        else {
+            result.Road.push(formattedData);
+        }
     });
+    return result;
 };
 export const sortFilterdDeviations = (situations) => {
     return situations.sort((a, b) => b.SeverityCode - a.SeverityCode);

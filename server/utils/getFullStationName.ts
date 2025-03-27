@@ -59,7 +59,7 @@ export const getFullStationName = async (trainsData: TrainMessageData[]) => {
       }),
       StartTime: formatTimeProperty(train.StartDateTime),
       VersionTime: formatTimeProperty(train.ModifiedTime),
-      MessageType: train.ReasonCodeText,
+      MessageCode: train.ReasonCodeText,
       UpdateType: "Train",
     };
 

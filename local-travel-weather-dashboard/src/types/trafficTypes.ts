@@ -21,3 +21,8 @@ export type TrainDeviation = {
   MessageCode: string;
   UpdateType: string;
 };
+
+export type TrafficData = {
+  Road: Deviation[];
+  Ferry: Deviation[];
+};

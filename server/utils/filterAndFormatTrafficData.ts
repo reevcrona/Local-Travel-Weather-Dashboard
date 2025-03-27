@@ -1,10 +1,16 @@
 import { Situation, FilterdDeviation } from "../types/trafikverketResponseType";
 
 export const filterAndFormatTrafficData = (situations: Situation[]) => {
-  return situations.map((situation) => {
-    const firstDeviation = situation.Deviation[0];
+  const result = {
+    Road: [] as FilterdDeviation[],
+    Ferry: [] as FilterdDeviation[],
+  };
 
-    const formattedData = {
+  situations.forEach((situation) => {
+    const firstDeviation = situation.Deviation[0];
+    const isFerryUpdate = firstDeviation.MessageType === "Färjor";
+
+    const formattedData: FilterdDeviation = {
       LocationDescriptor: firstDeviation.LocationDescriptor || "",
       MessageType: firstDeviation.MessageType || "",
       MessageCode: firstDeviation.MessageCode || "",
@@ -15,7 +21,7 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
       EndTime: formatTimeProperty(firstDeviation.EndTime) || "",
       VersionTime: formatTimeProperty(firstDeviation.VersionTime) || "",
       SeverityCode: firstDeviation.SeverityCode || 1,
-      UpdateType: "Traffic",
+      UpdateType: isFerryUpdate ? "Ferry" : "Traffic",
     };
 
     if (situation.Deviation.length > 1) {
@@ -34,14 +40,17 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
         });
       }
       if (tempLimits.length > 0) {
-        return {
-          ...formattedData,
-          TemporaryLimit: tempLimits,
-        };
+        formattedData.TemporaryLimit = tempLimits;
       }
     }
-    return formattedData;
+
+    if (isFerryUpdate) {
+      result.Ferry.push(formattedData);
+    } else {
+      result.Road.push(formattedData);
+    }
   });
+  return result;
 };
 
 export const sortFilterdDeviations = (situations: FilterdDeviation[]) => {

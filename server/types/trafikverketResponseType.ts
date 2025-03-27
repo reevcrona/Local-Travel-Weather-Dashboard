@@ -109,6 +109,8 @@ export type FilterdDeviation = {
   EndTime: string;
   Message: string;
   MessageCode: string;
+  MessageType: string;
   TemporaryLimit?: string | string[];
   SeverityCode: number;
+  UpdateType: string;
 };

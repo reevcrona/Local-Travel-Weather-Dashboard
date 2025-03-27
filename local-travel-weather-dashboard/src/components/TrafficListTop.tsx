@@ -32,7 +32,7 @@ function TrafficListTop({ info }: { info: Deviation | TrainDeviation }) {
           </div>
 
           <h2 className="ml-3 text-2xl">
-            {info.MessageCode}
+            {info.MessageCode[0].toUpperCase() + info.MessageCode.slice(1)}
             {isDeviation(info) && info.RoadNumber !== ""
               ? ` - ${info.RoadNumber}`
               : ""}

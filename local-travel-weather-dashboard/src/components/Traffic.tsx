@@ -7,14 +7,19 @@ import TrafficListBottom from "./TrafficListBottom";
 import { FaSearch } from "react-icons/fa";
 
 function Traffic() {
-  const [activeFilter, setActiveFilter] = useState<"all" | "trains" | "roads">(
-    "all",
-  );
+  const [activeFilter, setActiveFilter] = useState<
+    "all" | "trains" | "roads" | "ferry"
+  >("all");
   const contentRef = useRef<HTMLDivElement>(null);
 
   const coordinates = useCoordinatesStore((state) => state.coordinates);
-  const { fetchAllTrafficData, trafficData, trainsData, hasFetched } =
-    useCombinedTrafficStore();
+  const {
+    fetchAllTrafficData,
+    trafficData,
+    trainsData,
+    hasFetched,
+    ferryData,
+  } = useCombinedTrafficStore();
 
   const { lat, lng } = coordinates;
 
@@ -22,6 +27,8 @@ function Traffic() {
     if (lat === 0 && lng === 0) return;
     fetchAllTrafficData(lat, lng);
     console.log(trafficData);
+    console.log("Ferry DATA: ", ferryData);
+    console.log(trainsData);
     console.log(coordinates);
   }, [coordinates]);
 
@@ -48,6 +55,25 @@ function Traffic() {
       );
     });
   };
+
+  const renderFerryData = () => {
+    return ferryData.map((info, index) => {
+      return (
+        <div
+          key={index}
+          className="relative mb-4 rounded-xl border border-cardBorderColor bg-cardcColor"
+        >
+          <div
+            className={`absolute top-0 bottom-0 left-0 w-2 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
+          ></div>
+          <TrafficListTop info={info} />
+          <TrafficTextHeader info={info} />
+          <TrafficListBottom info={info} />
+        </div>
+      );
+    });
+  };
+
   const renderTrainData = () => {
     return trainsData.map((info, index) => {
       return (
@@ -87,6 +113,13 @@ function Traffic() {
           >
             Väg {trafficData.length}
           </button>
+
+          <button
+            className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "ferry" ? "bg-cardcColor text-white" : "bg-transparent"}`}
+            onClick={() => setActiveFilter("ferry")}
+          >
+            Färja {ferryData.length}
+          </button>
         </div>
         <div
           ref={contentRef}
@@ -98,6 +131,11 @@ function Traffic() {
           {(activeFilter === "all" || activeFilter === "trains") &&
             trainsData &&
             renderTrainData()}
+
+          {(activeFilter === "all" || activeFilter === "ferry") &&
+            ferryData &&
+            renderFerryData()}
+
           {!hasFetched && (
             <div className="flex h-full flex-col items-center justify-center text-gray-400">
               <FaSearch className="h-10 w-full" />
