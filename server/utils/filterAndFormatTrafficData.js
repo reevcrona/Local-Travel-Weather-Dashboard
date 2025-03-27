@@ -37,6 +37,9 @@ export const filterAndFormatTrafficData = (situations) => {
             }
         }
         if (isFerryUpdate) {
+            if (firstDeviation.Header) {
+                formattedData.Header = firstDeviation.Header;
+            }
             result.Ferry.push(formattedData);
         }
         else {

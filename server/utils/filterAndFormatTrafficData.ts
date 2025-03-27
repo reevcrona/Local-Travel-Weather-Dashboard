@@ -45,6 +45,9 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
     }
 
     if (isFerryUpdate) {
+      if (firstDeviation.Header) {
+        formattedData.Header = firstDeviation.Header;
+      }
       result.Ferry.push(formattedData);
     } else {
       result.Road.push(formattedData);
