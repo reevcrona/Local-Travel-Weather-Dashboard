@@ -1,7 +1,7 @@
 import { Situation, FilterdDeviation } from "../types/trafikverketResponseType";
 
 export const filterAndFormatTrafficData = (situations: Situation[]) => {
-  const result = {
+  const result: Record<string, FilterdDeviation[]> = {
     Road: [] as FilterdDeviation[],
     Ferry: [] as FilterdDeviation[],
   };
@@ -53,11 +53,24 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
       result.Road.push(formattedData);
     }
   });
+
+  Object.keys(result).forEach((key) => {
+    if (result[key].length > 1) {
+      result[key] = result[key].sort(
+        (a, b) =>
+          new Date(b.VersionTime).getTime() - new Date(a.VersionTime).getTime()
+      );
+    }
+  });
+
   return result;
 };
 
 export const sortFilterdDeviations = (situations: FilterdDeviation[]) => {
-  return situations.sort((a, b) => b.SeverityCode - a.SeverityCode);
+  return situations.sort(
+    (a, b) =>
+      new Date(b.VersionTime).getTime() - new Date(a.VersionTime).getTime()
+  );
 };
 
 export const formatTimeProperty = (timeProp: string) => {

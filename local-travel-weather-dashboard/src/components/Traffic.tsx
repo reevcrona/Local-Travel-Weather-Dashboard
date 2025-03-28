@@ -91,6 +91,30 @@ function Traffic() {
       );
     });
   };
+
+  const renderAllData = () => {
+    const allData = [...trafficData, ...trainsData, ...ferryData];
+    allData.sort(
+      (a, b) =>
+        new Date(b.VersionTime).getTime() - new Date(a.VersionTime).getTime(),
+    );
+    return allData.map((info, index) => {
+      return (
+        <div
+          key={index}
+          className="relative mb-4 rounded-xl border border-cardBorderColor bg-cardcColor"
+        >
+          <div
+            className={`absolute top-0 bottom-0 left-0 w-2 bg-[#1282A2]`}
+          ></div>
+          <TrafficListTop info={info} />
+          <TrafficTextHeader info={info} />
+          <TrafficListBottom info={info} />
+        </div>
+      );
+    });
+  };
+
   return (
     <>
       <div className="flex w-full flex-col items-center justify-center">
@@ -99,7 +123,7 @@ function Traffic() {
             className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "all" ? "bg-cardcColor text-white" : "bg-transparent"}`}
             onClick={() => setActiveFilter("all")}
           >
-            Alla {trafficData.length + trainsData.length}
+            Alla {trafficData.length + trainsData.length + ferryData.length}
           </button>
           <button
             className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "trains" ? "bg-cardcColor text-white" : "bg-transparent"}`}
@@ -127,7 +151,7 @@ function Traffic() {
         >
           {(activeFilter === "all" || activeFilter === "roads") &&
             trafficData &&
-            renderTrafficData()}
+            renderAllData()}
           {(activeFilter === "all" || activeFilter === "trains") &&
             trainsData &&
             renderTrainData()}
