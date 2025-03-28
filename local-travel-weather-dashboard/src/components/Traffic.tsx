@@ -5,6 +5,7 @@ import TrafficListTop from "./TrafficListTop";
 import TrafficTextHeader from "./TrafficTextHeader";
 import TrafficListBottom from "./TrafficListBottom";
 import { FaSearch } from "react-icons/fa";
+import TrafficListItem from "./TrafficListItem";
 
 function Traffic() {
   const [activeFilter, setActiveFilter] = useState<
@@ -64,37 +65,13 @@ function Traffic() {
 
   const renderFerryData = () => {
     return ferryData.map((info, index) => {
-      return (
-        <div
-          key={index}
-          className="relative mb-4 rounded-xl border border-cardBorderColor bg-cardcColor"
-        >
-          <div
-            className={`absolute top-0 bottom-0 left-0 w-2 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
-          ></div>
-          <TrafficListTop info={info} />
-          <TrafficTextHeader info={info} />
-          <TrafficListBottom info={info} />
-        </div>
-      );
+      return <TrafficListItem info={info} />;
     });
   };
 
   const renderTrainData = () => {
     return trainsData.map((info, index) => {
-      return (
-        <div
-          key={index}
-          className="relative mb-4 rounded-xl border border-cardBorderColor bg-cardcColor"
-        >
-          <div
-            className={`absolute top-0 bottom-0 left-0 w-2 bg-[#1282A2]`}
-          ></div>
-          <TrafficListTop info={info} />
-          <TrafficTextHeader info={info} />
-          <TrafficListBottom info={info} />
-        </div>
-      );
+      return <TrafficListItem info={info} />;
     });
   };
 
@@ -155,27 +132,7 @@ function Traffic() {
           ref={contentRef}
           className={`@container/main flex max-h-[600px] min-h-[500px] w-full ${!hasFetched && "justify-center"} max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
         >
-          {activeFilter === "all" && trafficData && renderAllData()}
-          {(activeFilter === "all" || activeFilter === "roads") &&
-            trafficData &&
-            renderTrafficData()}
-          {(activeFilter === "all" || activeFilter === "trains") &&
-            trainsData &&
-            renderTrainData()}
-
-          {(activeFilter === "all" || activeFilter === "ferry") &&
-            ferryData &&
-            renderFerryData()}
-
-          {!hasFetched && (
-            <div className="flex h-full flex-col items-center justify-center text-gray-400">
-              <FaSearch className="h-10 w-full" />
-              <p className="mt-2 text-lg">Ingen trafikdata laddad</p>
-              <p className="text-sm">
-                Välj en plats för att visa trafikinformation
-              </p>
-            </div>
-          )}
+          {ferryData && renderFerryData()}
         </div>
       </div>
     </>

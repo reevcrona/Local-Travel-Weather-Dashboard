@@ -1,7 +1,8 @@
 import { FaRoad } from "react-icons/fa";
 import { FaTrain } from "react-icons/fa6";
 import { Deviation, TrainDeviation } from "../types/trafficTypes";
-function TrafficListTop({ info }: { info: Deviation | TrainDeviation }) {
+import { TrafficListChildProps } from "../types/trafficListProps";
+function TrafficListTop({ info, itemType, typeColor }: TrafficListChildProps) {
   function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
     return (
       (info as Deviation).Message !== undefined ||

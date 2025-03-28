@@ -1,13 +1,14 @@
 import TrafficListTop from "./TrafficListTop";
 import TrafficTextHeader from "./TrafficTextHeader";
 import TrafficListBottom from "./TrafficListBottom";
+import { TrafficListProps } from "../types/trafficListProps";
 import {
   Deviation,
   TrainDeviation,
   FerryDeviation,
 } from "../types/trafficTypes";
 
-function TrafficListItem(info: Deviation | TrainDeviation | FerryDeviation) {
+function TrafficListItem({ info }: TrafficListProps) {
   const getTrafficType = (
     info: Deviation | TrainDeviation | FerryDeviation,
   ): "Train" | "Traffic" | "Ferry" | "Unknown" => {
@@ -54,7 +55,7 @@ function TrafficListItem(info: Deviation | TrainDeviation | FerryDeviation) {
   return (
     <div className="relative mb-4 rounded-xl border border-cardBorderColor bg-cardcColor">
       <div className={`absolute top-0 bottom-0 left-0 w-2 ${colorClass}`}></div>
-      <TrafficListTop info={info} />
+      <TrafficListTop info={info} typeColor={colorClass} />
       <TrafficTextHeader info={info} />
       <TrafficListBottom info={info} />
     </div>
