@@ -149,9 +149,10 @@ function Traffic() {
           ref={contentRef}
           className={`@container/main flex max-h-[600px] min-h-[500px] w-full ${!hasFetched && "justify-center"} max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
         >
+          {activeFilter === "all" && trafficData && renderAllData()}
           {(activeFilter === "all" || activeFilter === "roads") &&
             trafficData &&
-            renderAllData()}
+            renderTrafficData()}
           {(activeFilter === "all" || activeFilter === "trains") &&
             trainsData &&
             renderTrainData()}

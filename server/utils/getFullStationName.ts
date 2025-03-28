@@ -65,5 +65,9 @@ export const getFullStationName = async (trainsData: TrainMessageData[]) => {
 
     return updatedTrain;
   });
+  updatedTrainsData.sort(
+    (a, b) =>
+      new Date(b.VersionTime).getTime() - new Date(a.VersionTime).getTime()
+  );
   return updatedTrainsData;
 };
