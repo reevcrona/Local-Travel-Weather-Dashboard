@@ -26,3 +26,19 @@ export type TrafficData = {
   Road: Deviation[];
   Ferry: Deviation[];
 };
+
+export type FerryDeviation = {
+  Header: string;
+  EndTime: string;
+  LocationDescriptor: string;
+  Message: string;
+  MessageCode: string;
+  MessageType: string;
+  RoadNumber: string;
+  SeverityCode: number;
+  SeverityText: string;
+  StartTime: string;
+  TemporaryLimit: string[];
+  UpdateType: string;
+  VersionTime: string;
+};

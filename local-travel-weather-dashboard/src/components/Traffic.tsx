@@ -12,6 +12,12 @@ function Traffic() {
   >("all");
   const contentRef = useRef<HTMLDivElement>(null);
 
+  const customColors = {
+    5: "bg-trafficRedHeader",
+    4: "bg-trafficDarkOliveHeader",
+    2: "bg-trafficGrayHeader",
+  };
+
   const coordinates = useCoordinatesStore((state) => state.coordinates);
   const {
     fetchAllTrafficData,
