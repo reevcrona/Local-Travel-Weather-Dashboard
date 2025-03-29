@@ -1,12 +1,16 @@
 import { FaRoad } from "react-icons/fa";
 import { FaTrain, FaFerry } from "react-icons/fa6";
-import { Deviation, TrainDeviation } from "../types/trafficTypes";
+import {
+  Deviation,
+  FerryDeviation,
+  TrainDeviation,
+} from "../types/trafficTypes";
 import { TrafficListChildProps } from "../types/trafficListProps";
 import { IconType } from "react-icons";
 
 let TrafficIcon: IconType;
 
-function TrafficListTop({ info, bgColor, textColor }: TrafficListChildProps) {
+function TrafficListTop({ info, bgColor }: TrafficListChildProps) {
   function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
     return (
       (info as Deviation).Message !== undefined ||
@@ -14,6 +18,11 @@ function TrafficListTop({ info, bgColor, textColor }: TrafficListChildProps) {
     );
   }
 
+  function isFerryDeviation(
+    info: Deviation | TrainDeviation | FerryDeviation,
+  ): info is FerryDeviation {
+    return (info as FerryDeviation).Header !== undefined;
+  }
   switch (info.UpdateType) {
     case "Traffic":
       TrafficIcon = FaRoad;
@@ -45,10 +54,13 @@ function TrafficListTop({ info, bgColor, textColor }: TrafficListChildProps) {
           </div>
 
           <h2 className="ml-3 text-2xl">
-            {info.MessageCode[0].toUpperCase() + info.MessageCode.slice(1)}
-            {isDeviation(info) && info.RoadNumber !== ""
-              ? ` - ${info.RoadNumber}`
-              : ""}
+            {isFerryDeviation(info)
+              ? info.Header
+              : `${info.MessageCode[0].toUpperCase()}${info.MessageCode.slice(1)}${
+                  isDeviation(info) && info.RoadNumber !== ""
+                    ? ` - ${info.RoadNumber}`
+                    : ""
+                }`}
           </h2>
         </div>
       </div>

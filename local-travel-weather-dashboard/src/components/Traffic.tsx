@@ -46,19 +46,19 @@ function Traffic() {
   }, [activeFilter]);
 
   const renderTrafficData = () => {
-    return trafficData.map((info, index) => {
+    return trafficData.map((info) => {
       return <TrafficListItem info={info} />;
     });
   };
 
   const renderFerryData = () => {
-    return ferryData.map((info, index) => {
+    return ferryData.map((info) => {
       return <TrafficListItem info={info} />;
     });
   };
 
   const renderTrainData = () => {
-    return trainsData.map((info, index) => {
+    return trainsData.map((info) => {
       return <TrafficListItem info={info} />;
     });
   };

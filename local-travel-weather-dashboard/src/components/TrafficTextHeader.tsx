@@ -2,11 +2,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { Deviation } from "../types/trafficTypes";
 import { TrainDeviation } from "../types/trafficTypes";
 import { TrafficListChildProps } from "../types/trafficListProps";
-function TrafficTextHeader({
-  info,
-  bgColor,
-  textColor,
-}: TrafficListChildProps) {
+function TrafficTextHeader({ info, textColor }: TrafficListChildProps) {
   function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
     return (
       (info as Deviation).Message !== undefined ||
