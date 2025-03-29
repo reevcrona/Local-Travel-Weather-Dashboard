@@ -47,19 +47,7 @@ function Traffic() {
 
   const renderTrafficData = () => {
     return trafficData.map((info, index) => {
-      return (
-        <div
-          key={index}
-          className="relative mb-4 rounded-xl border border-cardBorderColor bg-cardcColor"
-        >
-          <div
-            className={`absolute top-0 bottom-0 left-0 w-2 ${info.SeverityCode === 2 ? "bg-trafficGrayHeader" : info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"}`}
-          ></div>
-          <TrafficListTop info={info} />
-          <TrafficTextHeader info={info} />
-          <TrafficListBottom info={info} />
-        </div>
-      );
+      return <TrafficListItem info={info} />;
     });
   };
 
@@ -82,19 +70,7 @@ function Traffic() {
         new Date(b.VersionTime).getTime() - new Date(a.VersionTime).getTime(),
     );
     return allData.map((info, index) => {
-      return (
-        <div
-          key={index}
-          className="relative mb-4 rounded-xl border border-cardBorderColor bg-cardcColor"
-        >
-          <div
-            className={`absolute top-0 bottom-0 left-0 w-2 bg-[#1282A2]`}
-          ></div>
-          <TrafficListTop info={info} />
-          <TrafficTextHeader info={info} />
-          <TrafficListBottom info={info} />
-        </div>
-      );
+      return <TrafficListItem info={info} />;
     });
   };
 
@@ -132,6 +108,8 @@ function Traffic() {
           ref={contentRef}
           className={`@container/main flex max-h-[600px] min-h-[500px] w-full ${!hasFetched && "justify-center"} max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
         >
+          {trafficData && renderTrafficData()}
+          {trainsData && renderTrainData()}
           {ferryData && renderFerryData()}
         </div>
       </div>

@@ -5,5 +5,7 @@ export type TrafficListProps = {
 };
 export type TrafficListChildProps = {
   info: Deviation | TrainDeviation | FerryDeviation;
-  typeColor: string;
+  bgColor: string;
+  textColor: string;
+  borderColor: string;
 };

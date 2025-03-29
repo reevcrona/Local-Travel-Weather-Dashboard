@@ -1,13 +1,29 @@
 import { FaRoad } from "react-icons/fa";
-import { FaTrain } from "react-icons/fa6";
+import { FaTrain, FaFerry } from "react-icons/fa6";
 import { Deviation, TrainDeviation } from "../types/trafficTypes";
 import { TrafficListChildProps } from "../types/trafficListProps";
-function TrafficListTop({ info, itemType, typeColor }: TrafficListChildProps) {
+import { IconType } from "react-icons";
+
+let TrafficIcon: IconType;
+
+function TrafficListTop({ info, bgColor, textColor }: TrafficListChildProps) {
   function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
     return (
       (info as Deviation).Message !== undefined ||
       (info as Deviation).TemporaryLimit !== undefined
     );
+  }
+
+  switch (info.UpdateType) {
+    case "Traffic":
+      TrafficIcon = FaRoad;
+      break;
+    case "Train":
+      TrafficIcon = FaTrain;
+      break;
+    case "Ferry":
+      TrafficIcon = FaFerry;
+      break;
   }
 
   return (
@@ -17,7 +33,7 @@ function TrafficListTop({ info, itemType, typeColor }: TrafficListChildProps) {
       <div className="flex flex-col">
         {isDeviation(info) && info.SeverityText && (
           <h4
-            className={`mb-1.5 w-[max-content] rounded-full ${isDeviation(info) && info.SeverityCode && info.SeverityCode === 2 ? "bg-trafficGrayHeader" : isDeviation(info) && info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : "bg-trafficRedHeader"} px-3 py-1 text-center font-bold`}
+            className={`mb-1.5 w-[max-content] rounded-full ${isDeviation(info) && bgColor} px-3 py-1 text-center font-bold`}
           >
             {isDeviation(info) && info.SeverityText}
           </h4>
@@ -25,11 +41,7 @@ function TrafficListTop({ info, itemType, typeColor }: TrafficListChildProps) {
 
         <div className="flex">
           <div className="pt-1">
-            {info.UpdateType === "Train" ? (
-              <FaTrain className="text-3xl" />
-            ) : (
-              <FaRoad className="text-3xl" />
-            )}
+            <TrafficIcon className="text-3xl" />
           </div>
 
           <h2 className="ml-3 text-2xl">

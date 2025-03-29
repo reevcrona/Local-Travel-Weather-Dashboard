@@ -25,19 +25,42 @@ function TrafficListItem({ info }: TrafficListProps) {
   };
 
   const trafficUpdateColorMap = {
-    Train: "bg-[#1282A2]",
-    Ferry: "bg-[#06D6A0]",
+    Train: {
+      bg: "bg-[#1282A2]",
+      text: "text-[#1282A2]",
+      border: "border-[#1282A2]",
+    },
+    Ferry: {
+      bg: "bg-[#06D6A0]",
+      text: "text-[#06D6A0]",
+      border: "border-[#06D6A0]",
+    },
   };
 
-  const severityBgColorMap: Record<number, string> = {
-    5: "bg-trafficRedHeader",
-    4: "bg-trafficDarkOliveHeader",
-    2: "bg-trafficGrayHeader",
+  const severityBgColorMap: Record<
+    number,
+    { bg: string; text: string; border: string }
+  > = {
+    5: {
+      bg: "bg-trafficRedHeader",
+      text: "text-trafficRedHeader",
+      border: "border-trafficRedHeader",
+    },
+    4: {
+      bg: "bg-trafficDarkOliveHeader",
+      text: "text-trafficDarkOliveHeader",
+      border: "border-trafficDarkOliveHeader",
+    },
+    2: {
+      bg: "bg-trafficGrayHeader",
+      text: "text-trafficGrayHeader",
+      border: "border-trafficGrayHeader",
+    },
   };
 
   const itemType = getTrafficType(info);
 
-  let colorClass: string = "";
+  let colorClass = { bg: "", text: "", border: "" };
 
   switch (itemType) {
     case "Ferry":
@@ -54,10 +77,27 @@ function TrafficListItem({ info }: TrafficListProps) {
 
   return (
     <div className="relative mb-4 rounded-xl border border-cardBorderColor bg-cardcColor">
-      <div className={`absolute top-0 bottom-0 left-0 w-2 ${colorClass}`}></div>
-      <TrafficListTop info={info} typeColor={colorClass} />
-      <TrafficTextHeader info={info} />
-      <TrafficListBottom info={info} />
+      <div
+        className={`absolute top-0 bottom-0 left-0 w-2 ${colorClass.bg}`}
+      ></div>
+      <TrafficListTop
+        info={info}
+        bgColor={colorClass.bg}
+        textColor={colorClass.text}
+        borderColor={colorClass.border}
+      />
+      <TrafficTextHeader
+        info={info}
+        bgColor={colorClass.bg}
+        textColor={colorClass.text}
+        borderColor={colorClass.border}
+      />
+      <TrafficListBottom
+        info={info}
+        bgColor={colorClass.bg}
+        textColor={colorClass.text}
+        borderColor={colorClass.border}
+      />
     </div>
   );
 }

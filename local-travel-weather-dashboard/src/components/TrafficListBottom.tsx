@@ -3,7 +3,13 @@ import { FaTriangleExclamation } from "react-icons/fa6";
 import { Deviation, TrainDeviation } from "../types/trafficTypes";
 import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from "react-icons/io";
 import { useState } from "react";
-function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
+import { TrafficListChildProps } from "../types/trafficListProps";
+function TrafficListBottom({
+  info,
+  bgColor,
+  textColor,
+  borderColor,
+}: TrafficListChildProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
@@ -29,12 +35,10 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
         info.TemporaryLimit &&
         info.TemporaryLimit.length > 0 ? (
           <div
-            className={`max-w-[480px] rounded-lg border-l-4 ${info.SeverityCode === 2 ? "border-trafficGrayHeader" : info.SeverityCode === 4 ? "border-trafficDarkOliveHeader" : "border-trafficRedHeader"} bg-headerBg p-4`}
+            className={`max-w-[480px] rounded-lg border-l-4 ${borderColor} bg-headerBg p-4`}
           >
             <div className="mb-3 flex items-center">
-              <FaTriangleExclamation
-                className={`mr-2 ${info.SeverityCode === 2 ? "text-trafficGrayHeader" : info.SeverityCode === 4 ? "text-trafficDarkOliveHeader" : "text-trafficRedHeader"}`}
-              />
+              <FaTriangleExclamation className={`mr-2 ${textColor}`} />
               <h4 className="font-bold text-white">
                 Tillfälliga begränsningar
               </h4>
@@ -89,7 +93,7 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
           >
             <div className="flex items-center gap-2">
               <div
-                className={`flex h-8 w-8 items-center justify-center rounded-full ${isDeviation(info) && info.SeverityCode === 2 ? "bg-trafficGrayHeader" : isDeviation(info) && info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : isDeviation(info) && info.SeverityCode === 5 ? "bg-trafficRedHeader" : "bg-[#1282A2]"}`}
+                className={`flex h-8 w-8 items-center justify-center rounded-full ${bgColor}`}
               >
                 <FaRegCalendarAlt className="text-white" />
               </div>
