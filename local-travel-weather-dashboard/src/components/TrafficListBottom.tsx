@@ -1,4 +1,4 @@
-import { FaRegCalendarAlt, FaFlagCheckered } from "react-icons/fa";
+import { FaRegCalendarAlt, FaFlagCheckered, FaCircle } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
 import { Deviation, TrainDeviation } from "../types/trafficTypes";
 import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from "react-icons/io";
@@ -44,12 +44,13 @@ function TrafficListBottom({
               </h4>
             </div>
 
-            <ul className="list-disc pl-9">
+            <ul className="list-none">
               {info.TemporaryLimit.map((tempLimit, index) => (
                 <li
-                  className={`text-white marker:text-2xl ${info.SeverityCode === 2 ? "marker:text-trafficGrayHeader" : info.SeverityCode === 4 ? "marker:text-trafficDarkOliveHeader" : "marker:text-trafficRedHeader"}`}
+                  className={`flex items-center gap-2 text-white`}
                   key={index}
                 >
+                  <FaCircle className={`${textColor} text-xs`} />
                   {tempLimit}
                 </li>
               ))}
