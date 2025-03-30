@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
 import { useCombinedTrafficStore } from "../stores/combinedTrafficStore";
 import TrafficListTop from "./TrafficListTop";
@@ -12,12 +12,6 @@ function Traffic() {
     "all" | "trains" | "roads" | "ferry"
   >("all");
   const contentRef = useRef<HTMLDivElement>(null);
-
-  const customColors = {
-    5: "bg-trafficRedHeader",
-    4: "bg-trafficDarkOliveHeader",
-    2: "bg-trafficGrayHeader",
-  };
 
   const coordinates = useCoordinatesStore((state) => state.coordinates);
   const {
@@ -45,33 +39,28 @@ function Traffic() {
     }
   }, [activeFilter]);
 
-  const renderTrafficData = () => {
-    return trafficData.map((info) => {
-      return <TrafficListItem info={info} />;
-    });
-  };
-
-  const renderFerryData = () => {
-    return ferryData.map((info) => {
-      return <TrafficListItem info={info} />;
-    });
-  };
-
-  const renderTrainData = () => {
-    return trainsData.map((info) => {
-      return <TrafficListItem info={info} />;
-    });
-  };
-
-  const renderAllData = () => {
+  const sortedAllData = useMemo(() => {
     const allData = [...trafficData, ...trainsData, ...ferryData];
-    allData.sort(
+
+    return allData.sort(
       (a, b) =>
         new Date(b.VersionTime).getTime() - new Date(a.VersionTime).getTime(),
     );
-    return allData.map((info, index) => {
-      return <TrafficListItem info={info} />;
-    });
+  }, [trafficData, trainsData, ferryData]);
+
+  const filteredTrafficData = () => {
+    switch (activeFilter) {
+      case "all":
+        return sortedAllData;
+      case "trains":
+        return trainsData;
+      case "roads":
+        return trafficData;
+      case "ferry":
+        return ferryData;
+      default:
+        return [];
+    }
   };
 
   return (
@@ -108,9 +97,9 @@ function Traffic() {
           ref={contentRef}
           className={`@container/main flex max-h-[600px] min-h-[500px] w-full ${!hasFetched && "justify-center"} max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
         >
-          {trafficData && renderTrafficData()}
-          {trainsData && renderTrainData()}
-          {ferryData && renderFerryData()}
+          {filteredTrafficData().map((info) => (
+            <TrafficListItem info={info} />
+          ))}
         </div>
       </div>
     </>
