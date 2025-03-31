@@ -1,10 +1,8 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import { useCoordinatesStore } from "../stores/coordinatesStore";
 import { useCombinedTrafficStore } from "../stores/combinedTrafficStore";
-import TrafficListTop from "./TrafficListTop";
-import TrafficTextHeader from "./TrafficTextHeader";
-import TrafficListBottom from "./TrafficListBottom";
 import { FaSearch } from "react-icons/fa";
+import { BsExclamationCircle } from "react-icons/bs";
 import TrafficListItem from "./TrafficListItem";
 
 function Traffic() {
@@ -95,11 +93,40 @@ function Traffic() {
         </div>
         <div
           ref={contentRef}
-          className={`@container/main flex max-h-[600px] min-h-[500px] w-full ${!hasFetched && "justify-center"} max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
+          className={`@container/main flex max-h-[600px] min-h-[500px] w-full ${(!hasFetched || filteredTrafficData().length === 0) && "justify-center"} max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
         >
-          {filteredTrafficData().map((info) => (
-            <TrafficListItem info={info} />
-          ))}
+          {!hasFetched && (
+            <div className="flex h-full flex-col items-center justify-center text-gray-400">
+              <FaSearch className="mb-2 h-10 w-full" />
+              <p className="mb-2 text-lg font-medium text-white">
+                Ingen trafikdata laddad
+              </p>
+              <p className="text-sm">
+                Välj en plats för att visa trafikinformation
+              </p>
+            </div>
+          )}
+
+          {hasFetched &&
+            filteredTrafficData().length > 0 &&
+            filteredTrafficData().map((info, index) => (
+              <TrafficListItem info={info} key={index} />
+            ))}
+
+          {hasFetched && filteredTrafficData().length === 0 && (
+            <div className="flex flex-col items-center justify-center p-8 text-center">
+              <div className="mb-4 text-gray-400">
+                <BsExclamationCircle className="text-5xl" />
+              </div>
+              <h2 className="mb-2 text-xl font-medium text-white">
+                Inga trafikuppdateringar
+              </h2>
+              <p className="text-gray-400">
+                Det finns för närvarande ingen information om trafikstörningar i
+                det valda området.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
