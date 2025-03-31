@@ -54,10 +54,10 @@ function AutocompleteInput() {
       <label htmlFor="google-input"></label>
       <input
         id="google-input"
-        className="min-h-10 w-md rounded-3xl bg-black pl-8 text-white placeholder:text-white"
+        className="min-h-10 w-full max-w-md rounded-3xl bg-black pl-8 text-white placeholder:text-white"
         type="text"
         ref={inputRef}
-        placeholder="Search"
+        placeholder="Sök efter en plats..."
       />
       <div className="absolute top-1/2 left-2 -translate-y-1/2 transform">
         <FaSearch color="white" />

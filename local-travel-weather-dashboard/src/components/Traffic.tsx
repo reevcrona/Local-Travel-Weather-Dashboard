@@ -63,7 +63,7 @@ function Traffic() {
 
   return (
     <>
-      <div className="flex w-full flex-col items-center justify-center">
+      <div className="flex w-full flex-col items-center justify-center px-2">
         <div className="mb-1 flex w-full max-w-6xl gap-2.5">
           <button
             className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "all" ? "bg-cardcColor text-white" : "bg-transparent"}`}
@@ -93,7 +93,7 @@ function Traffic() {
         </div>
         <div
           ref={contentRef}
-          className={`@container/main flex max-h-[600px] min-h-[500px] w-full ${(!hasFetched || filteredTrafficData().length === 0) && "justify-center"} max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
+          className={`@container/main flex max-h-[550px] min-h-[550px] w-full ${(!hasFetched || filteredTrafficData().length === 0) && "justify-center"} max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
         >
           {!hasFetched && (
             <div className="flex h-full flex-col items-center justify-center text-gray-400">
