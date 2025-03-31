@@ -64,37 +64,38 @@ function Traffic() {
   return (
     <>
       <div className="flex w-full flex-col items-center justify-center px-2">
-        <div className="mb-1 flex w-full max-w-6xl gap-2.5">
-          <button
-            className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "all" ? "bg-cardcColor text-white" : "bg-transparent"}`}
-            onClick={() => setActiveFilter("all")}
-          >
-            Alla {trafficData.length + trainsData.length + ferryData.length}
-          </button>
-          <button
-            className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "trains" ? "bg-cardcColor text-white" : "bg-transparent"}`}
-            onClick={() => setActiveFilter("trains")}
-          >
-            Tåg {trainsData.length}
-          </button>
-          <button
-            className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "roads" ? "bg-cardcColor text-white" : "bg-transparent"}`}
-            onClick={() => setActiveFilter("roads")}
-          >
-            Väg {trafficData.length}
-          </button>
-
-          <button
-            className={`border-2 border-mainContainerBg p-2 font-bold ${activeFilter === "ferry" ? "bg-cardcColor text-white" : "bg-transparent"}`}
-            onClick={() => setActiveFilter("ferry")}
-          >
-            Färja {ferryData.length}
-          </button>
-        </div>
         <div
           ref={contentRef}
-          className={`@container/main flex max-h-[550px] min-h-[550px] w-full ${(!hasFetched || filteredTrafficData().length === 0) && "justify-center"} max-w-6xl flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
+          className={`@container/main flex max-h-[550px] min-h-[550px] w-full items-center rounded-2xl ${(!hasFetched || filteredTrafficData().length === 0) && "justify-center"} max-w-[1240px] flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
         >
+          <div className="mt-2 mb-4 flex w-full max-w-6xl justify-center gap-2.5">
+            <button
+              className={`border-2 border-white bg-transparent p-2 font-bold text-white`}
+              onClick={() => setActiveFilter("all")}
+            >
+              Alla {trafficData.length + trainsData.length + ferryData.length}
+            </button>
+            <button
+              className={`border-2 border-mainContainerBg p-2 font-bold text-white`}
+              onClick={() => setActiveFilter("trains")}
+            >
+              Tåg {trainsData.length}
+            </button>
+            <button
+              className={`border-2 border-mainContainerBg p-2 font-bold text-white`}
+              onClick={() => setActiveFilter("roads")}
+            >
+              Väg {trafficData.length}
+            </button>
+
+            <button
+              className={`} border-2 border-mainContainerBg p-2 font-bold text-white`}
+              onClick={() => setActiveFilter("ferry")}
+            >
+              Färja {ferryData.length}
+            </button>
+          </div>
+
           {!hasFetched && (
             <div className="flex h-full flex-col items-center justify-center text-gray-400">
               <FaSearch className="mb-2 h-10 w-full" />
