@@ -70,25 +70,25 @@ function Traffic() {
           <div className="sticky top-0 z-10 w-full px-3 pt-4 pb-2">
             <div className="mb-2 flex w-full justify-center gap-2.5">
               <button
-                className={`cursor-pointer border-2 ${activeFilter === "all" ? "border-white" : "border-mainContainerBg"} bg-transparent p-2 font-bold text-white`}
+                className={`cursor-pointer rounded-lg border-2 ${activeFilter === "all" ? "border-white" : "border-[#4b5563]"} bg-transparent p-2 font-bold text-white hover:border-[#9ca3af]`}
                 onClick={() => setActiveFilter("all")}
               >
                 Alla {trafficData.length + trainsData.length + ferryData.length}
               </button>
               <button
-                className={`cursor-pointer border-2 ${activeFilter === "trains" ? "border-white" : "border-mainContainerBg"} bg-transparent p-2 font-bold text-white`}
+                className={`cursor-pointer rounded-lg border-2 ${activeFilter === "trains" ? "border-white" : "border-[#4b5563]"} bg-transparent p-2 font-bold text-white hover:border-[#9ca3af]`}
                 onClick={() => setActiveFilter("trains")}
               >
                 Tåg {trainsData.length}
               </button>
               <button
-                className={`cursor-pointer border-2 ${activeFilter === "roads" ? "border-white" : "border-mainContainerBg"} bg-transparent p-2 font-bold text-white`}
+                className={`cursor-pointer rounded-lg border-2 ${activeFilter === "roads" ? "border-white" : "border-[#4b5563]"} bg-transparent p-2 font-bold text-white hover:border-[#9ca3af]`}
                 onClick={() => setActiveFilter("roads")}
               >
                 Väg {trafficData.length}
               </button>
               <button
-                className={`cursor-pointer border-2 ${activeFilter === "ferry" ? "border-white" : "border-mainContainerBg"} bg-transparent p-2 font-bold text-white`}
+                className={`cursor-pointer rounded-lg border-2 ${activeFilter === "ferry" ? "border-white" : "border-[#4b5563]"} bg-transparent p-2 font-bold text-white hover:border-[#9ca3af]`}
                 onClick={() => setActiveFilter("ferry")}
               >
                 Färja {ferryData.length}
