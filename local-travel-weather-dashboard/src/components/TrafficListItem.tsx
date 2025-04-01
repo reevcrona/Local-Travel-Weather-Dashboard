@@ -73,6 +73,8 @@ function TrafficListItem({ info }: TrafficListProps) {
       const severity = (info as Deviation).SeverityCode;
       colorClass = severityBgColorMap[severity];
       break;
+    default:
+      colorClass;
   }
 
   return (

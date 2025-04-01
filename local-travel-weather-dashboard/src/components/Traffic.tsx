@@ -63,71 +63,76 @@ function Traffic() {
 
   return (
     <>
-      <div className="flex w-full flex-col items-center justify-center px-2">
+      <div className="flex w-full justify-center px-2">
         <div
-          ref={contentRef}
-          className={`@container/main flex max-h-[550px] min-h-[550px] w-full items-center rounded-2xl ${(!hasFetched || filteredTrafficData().length === 0) && "justify-center"} max-w-[1240px] flex-col overflow-y-auto bg-mainContainerBg px-3 py-4`}
+          className={`@container/main relative flex h-[550px] w-full max-w-[1240px] flex-col rounded-2xl bg-mainContainerBg p-0`}
         >
-          <div className="mt-2 mb-4 flex w-full max-w-6xl justify-center gap-2.5">
-            <button
-              className={`border-2 border-white bg-transparent p-2 font-bold text-white`}
-              onClick={() => setActiveFilter("all")}
-            >
-              Alla {trafficData.length + trainsData.length + ferryData.length}
-            </button>
-            <button
-              className={`border-2 border-mainContainerBg p-2 font-bold text-white`}
-              onClick={() => setActiveFilter("trains")}
-            >
-              Tåg {trainsData.length}
-            </button>
-            <button
-              className={`border-2 border-mainContainerBg p-2 font-bold text-white`}
-              onClick={() => setActiveFilter("roads")}
-            >
-              Väg {trafficData.length}
-            </button>
-
-            <button
-              className={`} border-2 border-mainContainerBg p-2 font-bold text-white`}
-              onClick={() => setActiveFilter("ferry")}
-            >
-              Färja {ferryData.length}
-            </button>
+          <div className="sticky top-0 z-10 w-full px-3 pt-4 pb-2">
+            <div className="mb-2 flex w-full justify-center gap-2.5">
+              <button
+                className={`cursor-pointer border-2 ${activeFilter === "all" ? "border-white" : "border-mainContainerBg"} bg-transparent p-2 font-bold text-white`}
+                onClick={() => setActiveFilter("all")}
+              >
+                Alla {trafficData.length + trainsData.length + ferryData.length}
+              </button>
+              <button
+                className={`cursor-pointer border-2 ${activeFilter === "trains" ? "border-white" : "border-mainContainerBg"} bg-transparent p-2 font-bold text-white`}
+                onClick={() => setActiveFilter("trains")}
+              >
+                Tåg {trainsData.length}
+              </button>
+              <button
+                className={`cursor-pointer border-2 ${activeFilter === "roads" ? "border-white" : "border-mainContainerBg"} bg-transparent p-2 font-bold text-white`}
+                onClick={() => setActiveFilter("roads")}
+              >
+                Väg {trafficData.length}
+              </button>
+              <button
+                className={`cursor-pointer border-2 ${activeFilter === "ferry" ? "border-white" : "border-mainContainerBg"} bg-transparent p-2 font-bold text-white`}
+                onClick={() => setActiveFilter("ferry")}
+              >
+                Färja {ferryData.length}
+              </button>
+            </div>
           </div>
 
-          {!hasFetched && (
-            <div className="flex h-full flex-col items-center justify-center text-gray-400">
-              <FaSearch className="mb-2 h-10 w-full" />
-              <p className="mb-2 text-lg font-medium text-white">
-                Ingen trafikdata laddad
-              </p>
-              <p className="text-sm">
-                Välj en plats för att visa trafikinformation
-              </p>
-            </div>
-          )}
-
-          {hasFetched &&
-            filteredTrafficData().length > 0 &&
-            filteredTrafficData().map((info, index) => (
-              <TrafficListItem info={info} key={index} />
-            ))}
-
-          {hasFetched && filteredTrafficData().length === 0 && (
-            <div className="flex flex-col items-center justify-center p-8 text-center">
-              <div className="mb-4 text-gray-400">
-                <BsExclamationCircle className="text-5xl" />
+          <div
+            ref={contentRef}
+            className={`flex flex-1 flex-col items-center overflow-y-auto px-3 pb-4 ${(!hasFetched || filteredTrafficData().length === 0) && "items-center justify-center"}`}
+          >
+            {!hasFetched && (
+              <div className="flex h-full flex-col items-center justify-center text-center text-gray-400">
+                <FaSearch className="mb-2 h-10 w-10" />
+                <p className="mb-2 text-lg font-medium text-white">
+                  Ingen trafikdata laddad
+                </p>
+                <p className="text-sm">
+                  Välj en plats för att visa trafikinformation
+                </p>
               </div>
-              <h2 className="mb-2 text-xl font-medium text-white">
-                Inga trafikuppdateringar
-              </h2>
-              <p className="text-gray-400">
-                Det finns för närvarande ingen information om trafikstörningar i
-                det valda området.
-              </p>
-            </div>
-          )}
+            )}
+
+            {hasFetched &&
+              filteredTrafficData().length > 0 &&
+              filteredTrafficData().map((info, index) => (
+                <TrafficListItem info={info} key={index} />
+              ))}
+
+            {hasFetched && filteredTrafficData().length === 0 && (
+              <div className="flex h-full flex-col items-center justify-center p-8 text-center">
+                <div className="mb-4 text-gray-400">
+                  <BsExclamationCircle className="text-5xl" />
+                </div>
+                <h2 className="mb-2 text-xl font-medium text-white">
+                  Inga trafikuppdateringar
+                </h2>
+                <p className="text-gray-400">
+                  Det finns för närvarande ingen information om trafikstörningar
+                  i det valda området.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>
