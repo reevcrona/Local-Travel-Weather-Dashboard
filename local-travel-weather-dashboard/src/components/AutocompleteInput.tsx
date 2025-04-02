@@ -48,13 +48,13 @@ function AutocompleteInput() {
   }, [isLoaded]);
   return (
     <form
-      className="relative"
+      className="relative w-full max-w-md"
       onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}
     >
       <label htmlFor="google-input"></label>
       <input
         id="google-input"
-        className="min-h-10 w-full max-w-md rounded-3xl bg-black pl-8 text-white placeholder:text-white"
+        className="min-h-10 w-full rounded-3xl bg-black pl-8 text-white placeholder:text-white"
         type="text"
         ref={inputRef}
         placeholder="Sök efter en plats..."

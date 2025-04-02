@@ -35,6 +35,11 @@ function TrafficListItem({ info }: TrafficListProps) {
       text: "text-[#06D6A0]",
       border: "border-[#06D6A0]",
     },
+    Unknown: {
+      bg: "bg-[#06D6A0]",
+      text: "text-[#06D6A0]",
+      border: "border-[#06D6A0]",
+    },
   };
 
   const severityBgColorMap: Record<
@@ -74,7 +79,7 @@ function TrafficListItem({ info }: TrafficListProps) {
       colorClass = severityBgColorMap[severity];
       break;
     default:
-      colorClass;
+      colorClass = trafficUpdateColorMap["Unknown"];
   }
 
   return (

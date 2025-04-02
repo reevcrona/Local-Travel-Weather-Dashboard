@@ -115,10 +115,10 @@ function Traffic() {
             {!hasFetched && (
               <div className="flex h-[70%] w-full max-w-xl flex-col items-center justify-center rounded-2xl bg-cardcColor text-center text-gray-400">
                 <FaSearch className="mb-2 h-10 w-10" />
-                <p className="mb-2 text-lg font-medium text-white">
+                <h2 className="mb-2 font-poppins text-lg font-medium text-white">
                   Ingen trafikdata laddad
-                </p>
-                <p className="text-sm">
+                </h2>
+                <p className="font-lato text-sm">
                   Välj en plats för att visa trafikinformation
                 </p>
               </div>
@@ -135,10 +135,10 @@ function Traffic() {
                 <div className="mb-4 text-gray-400">
                   <BsExclamationCircle className="text-5xl" />
                 </div>
-                <h2 className="mb-2 text-xl font-medium text-white">
+                <h2 className="mb-2 font-poppins text-xl font-medium text-white">
                   Inga trafikuppdateringar
                 </h2>
-                <p className="text-gray-400">
+                <p className="font-lato text-gray-400">
                   Det finns för närvarande ingen information om trafikstörningar
                   i det valda området.
                 </p>

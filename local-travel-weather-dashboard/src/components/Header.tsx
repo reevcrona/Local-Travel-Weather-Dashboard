@@ -7,8 +7,8 @@ function Header() {
         <img className="h-20 w-32" src={mapLogo} alt="Map Logo"></img>
       </div>
 
-      <div className="col-span-1 justify-self-center">
-        <h1 className="mb-7 text-center text-3xl">
+      <div className="col-span-1 flex flex-col items-center justify-self-center">
+        <h1 className="mb-7 text-center font-montserrat text-3xl">
           Local Travel & Weather Dashboard
         </h1>
         <AutocompleteInput />
