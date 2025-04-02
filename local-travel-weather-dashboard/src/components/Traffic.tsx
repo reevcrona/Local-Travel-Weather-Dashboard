@@ -72,10 +72,10 @@ function Traffic() {
     <>
       <div className="flex w-full justify-center px-2">
         <div
-          className={`@container/main relative flex h-[550px] w-full max-w-[1240px] flex-col rounded-2xl bg-mainContainerBg p-0`}
+          className={`@container/main relative flex h-[550px] w-full max-w-[1220px] flex-col rounded-2xl bg-mainContainerBg p-0`}
         >
-          <div className="sticky top-0 z-10 w-full px-3 pt-4 pb-2">
-            <div className="mb-2 flex w-full justify-center gap-2.5">
+          <div className="sticky top-0 z-10 w-full px-3 pt-5 pb-2">
+            <div className="mb-2 flex w-full flex-wrap justify-center gap-3.5">
               <TrafficFilterButton
                 activeFilter={activeFilter}
                 trafficAmount={
@@ -103,6 +103,9 @@ function Traffic() {
                 filtervalue={{ eng: "ferry", swe: "Färja" }}
               />
             </div>
+          </div>
+          <div className="flex w-full justify-center px-4">
+            <hr className="mb-3 w-full max-w-6xl border-t-2 border-hrColor opacity-70" />
           </div>
 
           <div
