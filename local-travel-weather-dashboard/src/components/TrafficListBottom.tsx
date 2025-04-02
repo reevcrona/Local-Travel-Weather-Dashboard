@@ -90,7 +90,7 @@ function TrafficListBottom({
         <div className="flex w-full max-w-[400px] flex-col items-center justify-center rounded-lg bg-headerBg px-2 @min-bottomContainerCol/main:mt-0 @min-bottomContainerCol/main:flex-col">
           <h4 className="py-4 text-xl text-white">Tidsplan</h4>
           <div
-            className={`flex ${info.UpdateType === "Traffic" ? "gap-6" : "gap-0"} pb-5`}
+            className={`flex flex-col @min-[440px]/main:flex-row ${info.UpdateType === "Traffic" ? "gap-6" : "gap-0"} pb-5`}
           >
             <div className="flex items-center gap-2">
               <div

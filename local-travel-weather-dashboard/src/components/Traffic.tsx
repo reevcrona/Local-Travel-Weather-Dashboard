@@ -113,7 +113,7 @@ function Traffic() {
             className={`flex flex-1 flex-col items-center overflow-y-auto px-3 pb-4 ${(!hasFetched || filteredTrafficData().length === 0) && "items-center justify-center"}`}
           >
             {!hasFetched && (
-              <div className="flex h-full flex-col items-center justify-center text-center text-gray-400">
+              <div className="flex h-[70%] w-full max-w-xl flex-col items-center justify-center rounded-2xl bg-cardcColor text-center text-gray-400">
                 <FaSearch className="mb-2 h-10 w-10" />
                 <p className="mb-2 text-lg font-medium text-white">
                   Ingen trafikdata laddad
@@ -131,7 +131,7 @@ function Traffic() {
               ))}
 
             {hasFetched && filteredTrafficData().length === 0 && (
-              <div className="flex h-full flex-col items-center justify-center p-8 text-center">
+              <div className="flex h-[70%] flex-col items-center justify-center rounded-2xl bg-cardcColor p-8 text-center">
                 <div className="mb-4 text-gray-400">
                   <BsExclamationCircle className="text-5xl" />
                 </div>
