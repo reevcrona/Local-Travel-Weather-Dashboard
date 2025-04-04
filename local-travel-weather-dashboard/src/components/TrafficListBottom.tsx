@@ -58,7 +58,10 @@ function TrafficListBottom({
           </div>
         ) : null}
         {isTrainDeviation(info) && info.AffectedLocations ? (
-          <div className="flex flex-col overflow-hidden rounded-lg border-l-4 border-[#1282A2] bg-headerBg p-3">
+          <div
+            onClick={() => setIsExpanded((prevState) => !prevState)}
+            className={`flex ${info.AffectedLocations.length > 17 ? "cursor-pointer" : "cursor-text"} flex-col overflow-hidden rounded-lg border-l-4 border-[#1282A2] bg-headerBg p-3`}
+          >
             <h4 className="mb-1 font-bold text-white">
               Stationer där tågtrafiken kan påverkas
             </h4>
@@ -72,15 +75,9 @@ function TrafficListBottom({
                 : info.AffectedLocations.join(", ")}
               {info.AffectedLocations.length > 17 &&
                 (!isExpanded ? (
-                  <IoMdArrowDropdownCircle
-                    onClick={() => setIsExpanded((prevState) => !prevState)}
-                    className="ml-2 inline-block cursor-pointer text-xl text-[#1282A2]"
-                  />
+                  <IoMdArrowDropdownCircle className="ml-2 inline-block cursor-pointer text-xl text-[#1282A2]" />
                 ) : (
-                  <IoMdArrowDropupCircle
-                    onClick={() => setIsExpanded((prevState) => !prevState)}
-                    className="ml-2 inline-block cursor-pointer text-xl text-[#1282A2]"
-                  />
+                  <IoMdArrowDropupCircle className="ml-2 inline-block cursor-pointer text-xl text-[#1282A2]" />
                 ))}
             </p>
           </div>
