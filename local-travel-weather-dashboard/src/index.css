@@ -9,6 +9,7 @@
   --color-trafficDarkOliveHeader: #866e00;
   --color-trafficRedHeader: #a31621;
   --color-hrColor: #9fa2b2;
+  /*Body color under */
   --color-cardcColor: rgb(30 41 59);
   --color-cardBorderColor: rgb(41 53 72);
   --color-headerBg: rgb(41 53 72);
@@ -59,4 +60,7 @@
 }
 .pac-item-selected {
   background-color: #6666;
+}
+:root {
+  background-color: rgb(30 41 59);
 }

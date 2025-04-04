@@ -8,7 +8,7 @@ function Header() {
       </div>
 
       <div className="col-span-1 flex flex-col items-center justify-self-center">
-        <h1 className="mb-7 text-center font-montserrat text-3xl">
+        <h1 className="mb-7 text-center font-montserrat text-3xl text-white">
           Local Travel & Weather Dashboard
         </h1>
         <AutocompleteInput />
