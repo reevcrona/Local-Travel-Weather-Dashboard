@@ -54,13 +54,13 @@ function AutocompleteInput() {
       <label htmlFor="google-input"></label>
       <input
         id="google-input"
-        className="min-h-10 w-full rounded-3xl bg-black pl-8 text-white placeholder:text-white"
+        className="min-h-10 w-full rounded-3xl border border-[#475569] bg-[#0f172a] px-4 py-3 pl-8 text-[#bae6fd] shadow-md transition-all duration-200 ease-in-out placeholder:text-[#64748b] hover:border-[#60a5fa] focus:border-[#38bdf8] focus:bg-[#1e293b] focus:shadow-[0_0_0_2px_rgba(56,189,248,0.3),0_4px_6px_rgba(0,0,0,0.1)] focus:outline-none"
         type="text"
         ref={inputRef}
         placeholder="Sök efter en plats..."
       />
       <div className="absolute top-1/2 left-2 -translate-y-1/2 transform">
-        <FaSearch color="white" />
+        <FaSearch color="#7dd3fc" />
       </div>
     </form>
   );
