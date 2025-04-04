@@ -52,10 +52,11 @@ export const getFullStationName = (trainsData) => __awaiter(void 0, void 0, void
             }),
             StartTime: formatTimeProperty(train.StartDateTime),
             VersionTime: formatTimeProperty(train.ModifiedTime),
-            MessageType: train.ReasonCodeText,
+            MessageCode: train.ReasonCodeText,
             UpdateType: "Train",
         };
         return updatedTrain;
     });
+    updatedTrainsData.sort((a, b) => new Date(b.VersionTime).getTime() - new Date(a.VersionTime).getTime());
     return updatedTrainsData;
 });

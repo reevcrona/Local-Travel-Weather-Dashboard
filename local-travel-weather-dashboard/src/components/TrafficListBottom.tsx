@@ -1,9 +1,15 @@
-import { FaRegCalendarAlt, FaFlagCheckered } from "react-icons/fa";
+import { FaRegCalendarAlt, FaFlagCheckered, FaCircle } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
 import { Deviation, TrainDeviation } from "../types/trafficTypes";
 import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from "react-icons/io";
 import { useState } from "react";
-function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
+import { TrafficListChildProps } from "../types/trafficListProps";
+function TrafficListBottom({
+  info,
+  bgColor,
+  textColor,
+  borderColor,
+}: TrafficListChildProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
@@ -29,23 +35,22 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
         info.TemporaryLimit &&
         info.TemporaryLimit.length > 0 ? (
           <div
-            className={`max-w-[480px] rounded-lg border-l-4 ${info.SeverityCode === 2 ? "border-trafficGrayHeader" : info.SeverityCode === 4 ? "border-trafficDarkOliveHeader" : "border-trafficRedHeader"} bg-headerBg p-4`}
+            className={`max-w-[480px] rounded-lg border-l-4 ${borderColor} bg-headerBg p-4`}
           >
             <div className="mb-3 flex items-center">
-              <FaTriangleExclamation
-                className={`mr-2 ${info.SeverityCode === 2 ? "text-trafficGrayHeader" : info.SeverityCode === 4 ? "text-trafficDarkOliveHeader" : "text-trafficRedHeader"}`}
-              />
+              <FaTriangleExclamation className={`mr-2 ${textColor}`} />
               <h4 className="font-bold text-white">
                 Tillfälliga begränsningar
               </h4>
             </div>
 
-            <ul className="list-disc pl-9">
+            <ul className="list-none">
               {info.TemporaryLimit.map((tempLimit, index) => (
                 <li
-                  className={`text-white marker:text-2xl ${info.SeverityCode === 2 ? "marker:text-trafficGrayHeader" : info.SeverityCode === 4 ? "marker:text-trafficDarkOliveHeader" : "marker:text-trafficRedHeader"}`}
+                  className={`flex items-center gap-2 text-white`}
                   key={index}
                 >
+                  <FaCircle className={`${textColor} text-xs`} />
                   {tempLimit}
                 </li>
               ))}
@@ -53,7 +58,10 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
           </div>
         ) : null}
         {isTrainDeviation(info) && info.AffectedLocations ? (
-          <div className="flex flex-col overflow-hidden rounded-lg border-l-4 border-[#1282A2] bg-headerBg p-3">
+          <div
+            onClick={() => setIsExpanded((prevState) => !prevState)}
+            className={`flex ${info.AffectedLocations.length > 17 ? "cursor-pointer" : "cursor-text"} flex-col overflow-hidden rounded-lg border-l-4 border-[#1282A2] bg-headerBg p-3`}
+          >
             <h4 className="mb-1 font-bold text-white">
               Stationer där tågtrafiken kan påverkas
             </h4>
@@ -67,15 +75,9 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
                 : info.AffectedLocations.join(", ")}
               {info.AffectedLocations.length > 17 &&
                 (!isExpanded ? (
-                  <IoMdArrowDropdownCircle
-                    onClick={() => setIsExpanded((prevState) => !prevState)}
-                    className="ml-2 inline-block cursor-pointer text-xl text-[#1282A2]"
-                  />
+                  <IoMdArrowDropdownCircle className="ml-2 inline-block cursor-pointer text-xl text-[#1282A2]" />
                 ) : (
-                  <IoMdArrowDropupCircle
-                    onClick={() => setIsExpanded((prevState) => !prevState)}
-                    className="ml-2 inline-block cursor-pointer text-xl text-[#1282A2]"
-                  />
+                  <IoMdArrowDropupCircle className="ml-2 inline-block cursor-pointer text-xl text-[#1282A2]" />
                 ))}
             </p>
           </div>
@@ -85,11 +87,11 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
         <div className="flex w-full max-w-[400px] flex-col items-center justify-center rounded-lg bg-headerBg px-2 @min-bottomContainerCol/main:mt-0 @min-bottomContainerCol/main:flex-col">
           <h4 className="py-4 text-xl text-white">Tidsplan</h4>
           <div
-            className={`flex ${info.UpdateType === "Traffic" ? "gap-6" : "gap-0"} pb-5`}
+            className={`flex flex-col @min-[440px]/main:flex-row ${info.UpdateType === "Traffic" || info.UpdateType === "Ferry" ? "gap-6" : "gap-0"} pb-5`}
           >
             <div className="flex items-center gap-2">
               <div
-                className={`flex h-8 w-8 items-center justify-center rounded-full ${isDeviation(info) && info.SeverityCode === 2 ? "bg-trafficGrayHeader" : isDeviation(info) && info.SeverityCode === 4 ? "bg-trafficDarkOliveHeader" : isDeviation(info) && info.SeverityCode === 5 ? "bg-trafficRedHeader" : "bg-[#1282A2]"}`}
+                className={`flex h-8 w-8 items-center justify-center rounded-full ${bgColor}`}
               >
                 <FaRegCalendarAlt className="text-white" />
               </div>
@@ -97,7 +99,7 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
                 <span className="font-bold tracking-tight text-text-dark-400">
                   STARTTID
                 </span>
-                <p className="font-medium text-white">{info.StartTime}</p>
+                <p className="font-bold text-white">{info.StartTime}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -114,7 +116,7 @@ function TrafficListBottom({ info }: { info: Deviation | TrainDeviation }) {
                   </span>
                 )}
 
-                <p className="font-medium text-white">
+                <p className="font-bold text-white">
                   {isDeviation(info) && info.EndTime}
                 </p>
               </div>

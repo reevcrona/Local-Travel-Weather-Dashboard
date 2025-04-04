@@ -1,12 +1,19 @@
 import { Situation, FilterdDeviation } from "../types/trafikverketResponseType";
 
 export const filterAndFormatTrafficData = (situations: Situation[]) => {
-  return situations.map((situation) => {
-    const firstDeviation = situation.Deviation[0];
+  const result: Record<string, FilterdDeviation[]> = {
+    Road: [] as FilterdDeviation[],
+    Ferry: [] as FilterdDeviation[],
+  };
 
-    const formattedData = {
+  situations.forEach((situation) => {
+    const firstDeviation = situation.Deviation[0];
+    const isFerryUpdate = firstDeviation.MessageType === "Färjor";
+
+    const formattedData: FilterdDeviation = {
       LocationDescriptor: firstDeviation.LocationDescriptor || "",
       MessageType: firstDeviation.MessageType || "",
+      MessageCode: firstDeviation.MessageCode || "",
       Message: firstDeviation.Message || "",
       RoadNumber: firstDeviation.RoadNumber || "",
       SeverityText: firstDeviation.SeverityText || "",
@@ -14,8 +21,7 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
       EndTime: formatTimeProperty(firstDeviation.EndTime) || "",
       VersionTime: formatTimeProperty(firstDeviation.VersionTime) || "",
       SeverityCode: firstDeviation.SeverityCode || 1,
-      UpdateType: "Traffic",
-      MessageCodeValue: firstDeviation.MessageCodeValue,
+      UpdateType: isFerryUpdate ? "Ferry" : "Traffic",
     };
 
     if (situation.Deviation.length > 1) {
@@ -34,18 +40,37 @@ export const filterAndFormatTrafficData = (situations: Situation[]) => {
         });
       }
       if (tempLimits.length > 0) {
-        return {
-          ...formattedData,
-          TemporaryLimit: tempLimits,
-        };
+        formattedData.TemporaryLimit = tempLimits;
       }
     }
-    return formattedData;
+
+    if (isFerryUpdate) {
+      if (firstDeviation.Header) {
+        formattedData.Header = firstDeviation.Header;
+      }
+      result.Ferry.push(formattedData);
+    } else {
+      result.Road.push(formattedData);
+    }
   });
+
+  Object.keys(result).forEach((key) => {
+    if (result[key].length > 1) {
+      result[key] = result[key].sort(
+        (a, b) =>
+          new Date(b.VersionTime).getTime() - new Date(a.VersionTime).getTime()
+      );
+    }
+  });
+
+  return result;
 };
 
 export const sortFilterdDeviations = (situations: FilterdDeviation[]) => {
-  return situations.sort((a, b) => b.SeverityCode - a.SeverityCode);
+  return situations.sort(
+    (a, b) =>
+      new Date(b.VersionTime).getTime() - new Date(a.VersionTime).getTime()
+  );
 };
 
 export const formatTimeProperty = (timeProp: string) => {

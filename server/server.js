@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import axios from "axios";
 import dotenv from "dotenv";
-import { filterAndFormatTrafficData, sortFilterdDeviations, } from "./utils/filterAndFormatTrafficData.js";
+import { filterAndFormatTrafficData, } from "./utils/filterAndFormatTrafficData.js";
 import { getFullStationName } from "./utils/getFullStationName.js";
 const app = express();
 const port = 3000;
@@ -33,6 +33,7 @@ app.post("/traffic", (req, res) => {
             
             
             <NE name="Deviation.SeverityText" value="Ingen påverkan" />
+            <NE name="Deviation.MessageCode" value="Tjälskada" />
         </FILTER>
     </QUERY>
 </REQUEST>
@@ -45,7 +46,7 @@ app.post("/traffic", (req, res) => {
     })
         .then((response) => {
         const situations = response.data.RESPONSE.RESULT[0].Situation;
-        const sortedData = sortFilterdDeviations(filterAndFormatTrafficData(situations));
+        const sortedData = filterAndFormatTrafficData(situations);
         res.json(sortedData);
     })
         .catch((error) => {

@@ -46,6 +46,7 @@ app.post("/traffic", (req, res) => {
             
             
             <NE name="Deviation.SeverityText" value="Ingen påverkan" />
+            <NE name="Deviation.MessageCode" value="Tjälskada" />
         </FILTER>
     </QUERY>
 </REQUEST>
@@ -59,9 +60,7 @@ app.post("/traffic", (req, res) => {
     })
     .then((response) => {
       const situations = response.data.RESPONSE.RESULT[0].Situation;
-      const sortedData = sortFilterdDeviations(
-        filterAndFormatTrafficData(situations)
-      );
+      const sortedData = filterAndFormatTrafficData(situations);
 
       res.json(sortedData);
     })
@@ -92,6 +91,7 @@ app.post("/trains", (req, res) => {
     })
     .then((response) => {
       const data = response.data.RESPONSE.RESULT[0].TrainMessage;
+
       getFullStationName(data)
         .then((updatedData) => res.json(updatedData))
         .catch((error) => {

@@ -1,6 +1,7 @@
 export type Deviation = {
   AffectedDirection: string;
   AffectedDirectionValue: string;
+  Header?: string;
   CountyNo?: number[];
   CreationTime: string;
   Creator: string;
@@ -108,7 +109,10 @@ export type FilterdDeviation = {
   StartTime: string;
   EndTime: string;
   Message: string;
+  MessageCode: string;
   MessageType: string;
   TemporaryLimit?: string | string[];
   SeverityCode: number;
+  UpdateType: string;
+  Header?: string;
 };

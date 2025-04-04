@@ -1,7 +1,8 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Deviation } from "../types/trafficTypes";
 import { TrainDeviation } from "../types/trafficTypes";
-function TrafficTextHeader({ info }: { info: Deviation | TrainDeviation }) {
+import { TrafficListChildProps } from "../types/trafficListProps";
+function TrafficTextHeader({ info, textColor }: TrafficListChildProps) {
   function isDeviation(info: Deviation | TrainDeviation): info is Deviation {
     return (
       (info as Deviation).Message !== undefined ||
@@ -12,9 +13,7 @@ function TrafficTextHeader({ info }: { info: Deviation | TrainDeviation }) {
     <div className="px-5">
       <div className="header-text flex w-full max-w-[max-content] items-center rounded-lg bg-headerBg p-3">
         {isDeviation(info) && info.SeverityCode && (
-          <FaMapMarkerAlt
-            className={`mr-1 text-lg ${info.SeverityCode === 2 ? "text-trafficGrayHeader" : info.SeverityCode === 4 ? "text-trafficDarkOliveHeader" : "text-trafficRedHeader"}`}
-          />
+          <FaMapMarkerAlt className={`mr-1 text-lg ${textColor}`} />
         )}
 
         <h2 className="text-base text-white">{info.LocationDescriptor}</h2>
