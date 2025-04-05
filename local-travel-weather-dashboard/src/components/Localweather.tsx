@@ -37,7 +37,7 @@ const Localweather = () => {
 
   const getDayOfWeek = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", { weekday: "long" });
+    return date.toLocaleDateString("swe-SE", { weekday: "long" });
   };
 
   const getDailyForecasts = (list: any[]) => {
@@ -57,13 +57,13 @@ const Localweather = () => {
   };
 
   return (
-    <table className="mx-auto mt-4 w-1/2 table-auto border-2 border-solid border-black">
+    <table className="mx-auto mt-20 mb-20 w-4/5 table-auto rounded-lg">
       <thead>
-        <tr className="divide-solid divide-black border-2 border-solid border-black">
-          <th>Day</th>
-          <th>Temp °C</th>
-          <th>Rain %</th>
-          <th>Weather</th>
+        <tr className="divide-solid divide-black bg-mainContainerBg">
+          <th className="text-white">Dag</th>
+          <th className="text-white">Temp °C</th>
+          <th className="text-white">Regn %</th>
+          <th className="text-white">Väder</th>
         </tr>
       </thead>
       <tbody>
@@ -71,15 +71,18 @@ const Localweather = () => {
           getDailyForecasts(weather.list).map((item: any, index: number) => (
             <tr
               key={index}
-              style={{ backgroundColor: index % 2 === 0 ? "#ebebeb" : "white" }}
+              style={{
+                backgroundColor:
+                  index % 2 === 0 ? "rgb(60 74 97)" : "rgb(41 53 72)",
+              }}
             >
-              <td className="border-r-2 border-solid border-black text-center">
+              <td className="border-r-2 border-solid border-mainContainerBg text-center text-white">
                 {getDayOfWeek(item.dt_txt)}
               </td>
-              <td className="border-r-2 border-solid border-black text-center">
+              <td className="border-r-2 border-solid border-mainContainerBg text-center text-white">
                 {item.main.temp ?? "N/A"}
               </td>
-              <td className="border-r-2 border-solid border-black text-center">
+              <td className="border-r-2 border-solid border-mainContainerBg text-center text-white">
                 {item.main.humidity ?? "N/A"}
               </td>
               <td>
