@@ -2,12 +2,26 @@ import { useCoordinatesStore } from "../stores/coordinatesStore";
 import { useEffect, useState } from "react";
 
 const Localweather = () => {
-  const [weather, setWeather] = useState<any>(null);
-  const coordinates = useCoordinatesStore((state) => state.coordinates);
-  const setCoordinates = useCoordinatesStore((state) => state.setCoordinates);
+  interface WeatherItem {
+    dt_txt: string;
+    main: {
+      temp: number;
+      humidity: number;
+    };
+    weather: {
+      icon: string;
+    }[];
+  }
 
-  const lat = coordinates.lat;
-  const lng = coordinates.lng;
+  interface WeatherData {
+    list: WeatherItem[];
+  }
+
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const coordinates = useCoordinatesStore((state) => state.coordinates);
+
+  const lat: number = coordinates.lat;
+  const lng: number = coordinates.lng;
   const units = "metric";
 
   const apiKey = "2c96b2f76ae370915bbd8a0c18b6789c";
@@ -17,17 +31,13 @@ const Localweather = () => {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${apiKey}&units=${units}`,
       );
-      const data = await response.json();
+      const data: WeatherData = await response.json();
       console.log(data);
       setWeather(data);
     } catch (error) {
       console.error(error);
     }
   };
-
-  // useEffect(() => {
-  //   fetchWeather();
-  // }, []);
 
   useEffect(() => {
     if (lat !== 0 && lng !== 0) {
@@ -40,8 +50,8 @@ const Localweather = () => {
     return date.toLocaleDateString("swe-SE", { weekday: "long" });
   };
 
-  const getDailyForecasts = (list: any[]) => {
-    const dailyForecasts: any[] = [];
+  const getDailyForecasts = (list: WeatherItem[]) => {
+    const dailyForecasts: WeatherItem[] = [];
     const dates = new Set();
 
     for (const item of list) {
