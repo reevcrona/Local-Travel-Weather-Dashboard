@@ -43,7 +43,7 @@ function TrafficListItem({ info }: TrafficListProps) {
   };
 
   const severityBgColorMap: Record<
-    number,
+    number | string,
     { bg: string; text: string; border: string }
   > = {
     5: {
@@ -57,6 +57,11 @@ function TrafficListItem({ info }: TrafficListProps) {
       border: "border-trafficDarkOliveHeader",
     },
     2: {
+      bg: "bg-trafficGrayHeader",
+      text: "text-trafficGrayHeader",
+      border: "border-trafficGrayHeader",
+    },
+    default: {
       bg: "bg-trafficGrayHeader",
       text: "text-trafficGrayHeader",
       border: "border-trafficGrayHeader",
@@ -76,7 +81,7 @@ function TrafficListItem({ info }: TrafficListProps) {
       break;
     case "Traffic":
       const severity = (info as Deviation).SeverityCode;
-      colorClass = severityBgColorMap[severity];
+      colorClass = severityBgColorMap[severity] || severityBgColorMap.default;
       break;
     default:
       colorClass = trafficUpdateColorMap["Unknown"];
