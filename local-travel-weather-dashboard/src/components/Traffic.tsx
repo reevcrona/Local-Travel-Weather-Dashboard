@@ -70,38 +70,48 @@ function Traffic() {
 
   return (
     <>
-      <div className="flex w-full justify-center px-2">
+      <div className="flex w-full flex-col items-center justify-center px-2">
         <div
           className={`@container/main relative flex h-[550px] w-full max-w-[950px] flex-col rounded-2xl bg-mainContainerBg p-0`}
         >
           <div className="z-10 w-full px-3 pt-5 pb-2">
-            <div className="mb-2 flex w-full flex-wrap justify-center gap-3.5">
-              <TrafficFilterButton
-                activeFilter={activeFilter}
-                trafficAmount={
-                  trafficData.length + trainsData.length + ferryData.length
-                }
-                handleFilterChange={handleFilterChange}
-                filtervalue={{ eng: "all", swe: "Alla" }}
-              />
-              <TrafficFilterButton
-                activeFilter={activeFilter}
-                trafficAmount={trainsData.length}
-                handleFilterChange={handleFilterChange}
-                filtervalue={{ eng: "trains", swe: "Tåg" }}
-              />
-              <TrafficFilterButton
-                activeFilter={activeFilter}
-                trafficAmount={trafficData.length}
-                handleFilterChange={handleFilterChange}
-                filtervalue={{ eng: "roads", swe: "Väg" }}
-              />
-              <TrafficFilterButton
-                activeFilter={activeFilter}
-                trafficAmount={ferryData.length}
-                handleFilterChange={handleFilterChange}
-                filtervalue={{ eng: "ferry", swe: "Färja" }}
-              />
+            <div className="mb-2 flex w-full flex-col items-center justify-between gap-3.5 px-3 min-[777px]:flex-row min-[777px]:gap-0">
+              <div className="flex w-full flex-1 flex-col items-center min-[777px]:items-start">
+                <h2 className="max-[max-content] text-center font-poppins text-xl font-bold text-white min-[385px]:text-3xl min-[777px]:text-start">
+                  Trafikuppdateringar
+                </h2>
+                <p className="w-[max-content] text-center font-lato text-[8px] text-gray-400 min-[385px]:text-xs min-[777px]:text-start">
+                  Senaste informationen om trafiken i ditt område
+                </p>
+              </div>
+              <div className="flex flex-1 flex-wrap justify-center gap-3.5 min-[442px]:justify-end">
+                <TrafficFilterButton
+                  activeFilter={activeFilter}
+                  trafficAmount={
+                    trafficData.length + trainsData.length + ferryData.length
+                  }
+                  handleFilterChange={handleFilterChange}
+                  filtervalue={{ eng: "all", swe: "Alla" }}
+                />
+                <TrafficFilterButton
+                  activeFilter={activeFilter}
+                  trafficAmount={trainsData.length}
+                  handleFilterChange={handleFilterChange}
+                  filtervalue={{ eng: "trains", swe: "Tåg" }}
+                />
+                <TrafficFilterButton
+                  activeFilter={activeFilter}
+                  trafficAmount={trafficData.length}
+                  handleFilterChange={handleFilterChange}
+                  filtervalue={{ eng: "roads", swe: "Väg" }}
+                />
+                <TrafficFilterButton
+                  activeFilter={activeFilter}
+                  trafficAmount={ferryData.length}
+                  handleFilterChange={handleFilterChange}
+                  filtervalue={{ eng: "ferry", swe: "Färja" }}
+                />
+              </div>
             </div>
           </div>
           <div className="flex w-full justify-center px-4">

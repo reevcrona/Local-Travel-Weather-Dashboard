@@ -20,6 +20,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+
 dotenv.config();
 
 const TRAFIKVERKET_API_KEY = process.env.TRAFIKVERKET_API_KEY;
