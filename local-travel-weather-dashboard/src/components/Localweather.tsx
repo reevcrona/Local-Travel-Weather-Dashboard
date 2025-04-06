@@ -67,45 +67,50 @@ const Localweather = () => {
   };
 
   return (
-    <table className="mx-auto mt-20 mb-20 w-4/5 table-auto rounded-lg">
-      <thead>
-        <tr className="divide-solid divide-black bg-mainContainerBg">
-          <th className="text-white">Dag</th>
-          <th className="text-white">Temp °C</th>
-          <th className="text-white">Regn %</th>
-          <th className="text-white">Väder</th>
-        </tr>
-      </thead>
-      <tbody>
-        {weather &&
-          getDailyForecasts(weather.list).map((item: any, index: number) => (
-            <tr
-              key={index}
-              style={{
-                backgroundColor:
-                  index % 2 === 0 ? "rgb(60 74 97)" : "rgb(41 53 72)",
-              }}
-            >
-              <td className="border-r-2 border-solid border-mainContainerBg text-center text-white">
-                {getDayOfWeek(item.dt_txt)}
-              </td>
-              <td className="border-r-2 border-solid border-mainContainerBg text-center text-white">
-                {item.main.temp ?? "N/A"}
-              </td>
-              <td className="border-r-2 border-solid border-mainContainerBg text-center text-white">
-                {item.main.humidity ?? "N/A"}
-              </td>
-              <td>
-                <img
-                  src={`http://openweathermap.org/img/wn/${item.weather[0].icon}.png`}
-                  alt="weather icon"
-                  className="mx-auto"
-                />
-              </td>
-            </tr>
-          ))}
-      </tbody>
-    </table>
+    <div className="flex w-full flex-col items-center justify-center p-[20px]">
+      <h1 className="mb-7 text-center font-montserrat text-3xl text-white">
+        Local Weather
+      </h1>
+      <table className="mx-auto w-full max-w-[950px] table-auto rounded-lg">
+        <thead>
+          <tr className="divide-solid divide-black bg-mainContainerBg">
+            <th className="text-white">Dag</th>
+            <th className="text-white">Temp °C</th>
+            <th className="text-white">Regn %</th>
+            <th className="text-white">Väder</th>
+          </tr>
+        </thead>
+        <tbody>
+          {weather &&
+            getDailyForecasts(weather.list).map((item: any, index: number) => (
+              <tr
+                key={index}
+                style={{
+                  backgroundColor:
+                    index % 2 === 0 ? "rgb(60 74 97)" : "rgb(41 53 72)",
+                }}
+              >
+                <td className="border-r-2 border-solid border-mainContainerBg text-center text-white">
+                  {getDayOfWeek(item.dt_txt)}
+                </td>
+                <td className="border-r-2 border-solid border-mainContainerBg text-center text-white">
+                  {item.main.temp ?? "N/A"}
+                </td>
+                <td className="border-r-2 border-solid border-mainContainerBg text-center text-white">
+                  {item.main.humidity ?? "N/A"}
+                </td>
+                <td>
+                  <img
+                    src={`http://openweathermap.org/img/wn/${item.weather[0].icon}.png`}
+                    alt="weather icon"
+                    className="mx-auto"
+                  />
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
