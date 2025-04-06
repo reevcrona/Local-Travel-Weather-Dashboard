@@ -72,9 +72,9 @@ function Traffic() {
     <>
       <div className="flex w-full justify-center px-2">
         <div
-          className={`@container/main relative flex h-[550px] w-full max-w-[1220px] flex-col rounded-2xl bg-mainContainerBg p-0`}
+          className={`@container/main relative flex h-[550px] w-full max-w-[950px] flex-col rounded-2xl bg-mainContainerBg p-0`}
         >
-          <div className="sticky top-0 z-10 w-full px-3 pt-5 pb-2">
+          <div className="z-10 w-full px-3 pt-5 pb-2">
             <div className="mb-2 flex w-full flex-wrap justify-center gap-3.5">
               <TrafficFilterButton
                 activeFilter={activeFilter}

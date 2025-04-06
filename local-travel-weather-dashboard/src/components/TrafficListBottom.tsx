@@ -27,15 +27,17 @@ function TrafficListBottom({
 
   return (
     <div className="bottom-container flex flex-col justify-between gap-4 px-5 pt-4 pb-4 @min-bottomContainerCol/main:flex-row">
-      <div className="flex flex-1/6 flex-col">
+      <div className="flex flex-1/6 flex-col items-center @min-[342px]/main:items-stretch">
         {isDeviation(info) && (
-          <p className="mb-3.5 pr-3 text-white">{info.Message}</p>
+          <p className="mb-3.5 pr-3 text-center text-white @min-[342px]/main:text-start">
+            {info.Message}
+          </p>
         )}
         {isDeviation(info) &&
         info.TemporaryLimit &&
         info.TemporaryLimit.length > 0 ? (
           <div
-            className={`max-w-[480px] rounded-lg border-l-4 ${borderColor} bg-headerBg p-4`}
+            className={`max-w-[400px] rounded-lg border-l-4 ${borderColor} @min-bottomContainerCol:/main:max-w-[480px] bg-headerBg p-4`}
           >
             <div className="mb-3 flex items-center">
               <FaTriangleExclamation className={`mr-2 ${textColor}`} />
@@ -87,7 +89,7 @@ function TrafficListBottom({
         <div className="flex w-full max-w-[400px] flex-col items-center justify-center rounded-lg bg-headerBg px-2 @min-bottomContainerCol/main:mt-0 @min-bottomContainerCol/main:flex-col">
           <h4 className="py-4 text-xl text-white">Tidsplan</h4>
           <div
-            className={`flex flex-col @min-[440px]/main:flex-row ${info.UpdateType === "Traffic" || info.UpdateType === "Ferry" ? "gap-6" : "gap-0"} pb-5`}
+            className={`flex flex-col @min-[440px]/main:flex-row ${info.UpdateType === "Traffic" || info.UpdateType === "Ferry" ? "gap-4" : "gap-0"} pb-5`}
           >
             <div className="flex items-center gap-2">
               <div
@@ -99,7 +101,7 @@ function TrafficListBottom({
                 <span className="font-bold tracking-tight text-text-dark-400">
                   STARTTID
                 </span>
-                <p className="font-bold text-white">{info.StartTime}</p>
+                <p className="text-sm font-bold text-white">{info.StartTime}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -116,7 +118,7 @@ function TrafficListBottom({
                   </span>
                 )}
 
-                <p className="font-bold text-white">
+                <p className="text-sm font-bold text-white">
                   {isDeviation(info) && info.EndTime}
                 </p>
               </div>
