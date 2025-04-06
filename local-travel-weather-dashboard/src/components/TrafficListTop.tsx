@@ -39,7 +39,7 @@ function TrafficListTop({ info, bgColor }: TrafficListChildProps) {
     <div
       className={`top-container flex flex-col justify-between px-5 py-5 text-white @min-trafficHeaderSmall/main:flex-row`}
     >
-      <div className="flex flex-col">
+      <div className="flex flex-col items-center @min-[342px]/main:items-start">
         {isDeviation(info) && info.SeverityText && (
           <h4
             className={`mb-1.5 w-[max-content] rounded-full ${isDeviation(info) && bgColor} px-3 py-1 text-center font-bold`}
@@ -48,7 +48,7 @@ function TrafficListTop({ info, bgColor }: TrafficListChildProps) {
           </h4>
         )}
 
-        <div className="flex">
+        <div className="flex flex-col items-center @min-[342px]/main:flex-row @min-[342px]/main:items-start">
           <div className="pt-1">
             <TrafficIcon className="text-3xl" />
           </div>
@@ -67,7 +67,7 @@ function TrafficListTop({ info, bgColor }: TrafficListChildProps) {
       <div>
         <hr className="mt-3 mb-2 block border-t-2 border-hrColor opacity-70 @min-trafficHeaderSmall/main:hidden" />
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col items-center @min-[342px]/main:items-start">
         <span className="text-start @min-trafficHeaderSmall/main:text-end">
           {" "}
           Uppdaterad
